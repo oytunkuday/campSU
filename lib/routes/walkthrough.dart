@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:campsu/utils/colors.dart';
+import 'package:campsu/utils/dimensions.dart';
+import 'package:campsu/utils/styles.dart';
 
 class Walkthrough extends StatefulWidget {
   const Walkthrough({Key? key}) : super(key: key);
@@ -12,20 +15,13 @@ class _WalkthroughState extends State<Walkthrough> {
   int currentPage = 0;
   int lastPage = 3;
 
-  List<String> title = [
-    'Welcome',
-    'ready to start',
-    'campSU'
-  ];
+  List<String> title = ['Welcome', 'ready to start', 'campSU'];
 
-  List<String> heading = [
-  ];
+  List<String> heading = [];
 
-  List<String> image = [
-  ];
+  List<String> image = [];
 
-  List<String> caption =  [
-  ];
+  List<String> caption = [];
 
   void nextPage() {
     if (currentPage < lastPage) {
@@ -33,23 +29,22 @@ class _WalkthroughState extends State<Walkthrough> {
         currentPage += 1;
         word = 'Previous';
       });
-    }
-    else if (currentPage == lastPage){
+    } else if (currentPage == lastPage) {
       setState(() {
         Navigator.pushNamed(context, '/welcome');
       });
     }
   }
+
   void prevPage() {
-    if (currentPage == 0){
+    if (currentPage == 0) {
       setState(() {
         Navigator.pushNamed(context, '/welcome');
       });
-    }
-    else if (currentPage > 0) {
+    } else if (currentPage > 0) {
       setState(() {
         currentPage -= 1;
-        if (currentPage == 0){
+        if (currentPage == 0) {
           setState(() {
             word = 'Skip';
           });
@@ -63,10 +58,10 @@ class _WalkthroughState extends State<Walkthrough> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.appBarColor,
+        backgroundColor: AppColors.backgroundColor,
         title: Text(
           title[currentPage].toUpperCase(),
-          style: kAppBarTitleLabel,
+          style: HeadingTextStyle,
         ),
         centerTitle: true,
       ),
@@ -79,7 +74,7 @@ class _WalkthroughState extends State<Walkthrough> {
                 padding: const EdgeInsets.symmetric(vertical: 25),
                 child: Text(
                   heading[currentPage],
-                  style: kHeadingLabel,
+                  style: HeadingTextStyle,
                 ),
               ),
             ),
@@ -94,7 +89,7 @@ class _WalkthroughState extends State<Walkthrough> {
             Center(
               child: Text(
                 caption[currentPage],
-                style: kTextLabel,
+                style: HeadingTextStyle,
               ),
             ),
             Padding(
@@ -114,7 +109,7 @@ class _WalkthroughState extends State<Walkthrough> {
                     ),
                     Spacer(),
                     Text(
-                      '${currentPage+1}/${lastPage+1}',
+                      '${currentPage + 1}/${lastPage + 1}',
                       style: TextStyle(
                         color: AppColors.textColor,
                       ),

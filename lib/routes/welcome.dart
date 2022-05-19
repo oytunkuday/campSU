@@ -11,6 +11,7 @@ class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         maintainBottomViewPadding: false,
         child: Column(
@@ -29,9 +30,9 @@ class Welcome extends StatelessWidget {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.all(60.0),
+              padding: const EdgeInsets.all(1.0),
               child: Image.network(
-                  'https://images-na.ssl-images-amazon.com/images/I/417MahKs6fL.png'),
+                  'https://www.iconsdb.com/icons/preview/orange/school-xxl.png'),
             ),
             Spacer(),
             Padding(
@@ -47,14 +48,14 @@ class Welcome extends StatelessWidget {
                             MaterialPageRoute(builder: (context) => SignUp()));
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: Text(
-                          'Signup',
-                          style: kButtonLightTextStyle,
+                          'Sign up!',
+                          style: ButtonLightTextStyle,
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.secondary,
+                        backgroundColor: AppColors.postColor,
                       ),
                     ),
                   ),
@@ -68,14 +69,14 @@ class Welcome extends StatelessWidget {
                         Navigator.pushNamed(context, '/login');
                       },
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: Text(
-                          'Login',
-                          style: kButtonDarkTextStyle,
+                          'Log in!',
+                          style: ButtonDarkTextStyle,
                         ),
                       ),
                       style: OutlinedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
+                        backgroundColor: AppColors.headColor,
                       ),
                     ),
                   ),

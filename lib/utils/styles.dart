@@ -6,19 +6,33 @@ TextStyle? HeadingTextStyle = GoogleFonts.montserrat(
   color: AppColors.headColor,
   fontWeight: FontWeight.w900,
   fontSize: 30.0,
-  letterSpacing: -0.7,
+  letterSpacing: -0.6,
+);
+
+TextStyle? ButtonLightTextStyle = GoogleFonts.montserrat(
+  color: AppColors.textColor,
+  fontWeight: FontWeight.w700,
+  fontSize: 25.0,
+  letterSpacing: -0.4,
+);
+
+TextStyle? ButtonDarkTextStyle = GoogleFonts.montserrat(
+  color: AppColors.darkButtonTextColor,
+  fontWeight: FontWeight.w700,
+  fontSize: 25.0,
+  letterSpacing: -0.4,
 );
 
 final kButtonLightTextStyle = GoogleFonts.montserrat(
   color: AppColors.textColor,
-  fontSize: 20.0,
-  letterSpacing: -0.7,
+  fontSize: 25.0,
+  letterSpacing: -0.4,
 );
 
 final kButtonDarkTextStyle = GoogleFonts.montserrat(
   color: AppColors.darkButtonTextColor,
-  fontSize: 20.0,
-  letterSpacing: -0.7,
+  fontSize: 25.0,
+  letterSpacing: -0.4,
 );
 
 final kAppBarTitleTextStyle = GoogleFonts.montserrat(
