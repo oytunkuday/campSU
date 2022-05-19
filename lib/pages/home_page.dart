@@ -57,20 +57,10 @@ class _HomePageState extends State<HomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 20,
+              height: 5,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Welcome to your daily dose of CampSU!",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                //
-              ],
             ),
             SizedBox(
               height: 30,
@@ -83,30 +73,43 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Container(
                         width: double.infinity,
-                        height: 288,
+                        height: 332,
                         decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.withOpacity(0.4),
-                                  spreadRadius: 2,
-                                  blurRadius: 15,
-                                  offset: Offset(0, 1))
-                            ],
-                            image: DecorationImage(
-                                image:
-                                    NetworkImage(postsList[index]['postImg']),
-                                fit: BoxFit.cover),
-                            borderRadius: BorderRadius.circular(20)),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.3),
+                                spreadRadius: 2,
+                                blurRadius: 15,
+                                offset: Offset(0, 1))
+                          ],
+                        ),
                       ),
                       Container(
-                          width: double.infinity,
-                          height: 288,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.black.withOpacity(0.25))),
+                        width: double.infinity,
+                        height: 332,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 48, color: AppColors.postColor)),
+                      ),
                       Container(
                         width: double.infinity,
                         height: 288,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.grey.withOpacity(0.4),
+                                spreadRadius: 2,
+                                blurRadius: 15,
+                                offset: Offset(0, 1))
+                          ],
+                          image: DecorationImage(
+                              image: NetworkImage(postsList[index]['postImg']),
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 339,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -168,8 +171,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 27,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(27),
-                                        color:
-                                            Color(0xFFE5E5E5).withOpacity(0.5)),
+                                        color: Colors.grey.withOpacity(0.35)),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -193,8 +195,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 27,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(27),
-                                        color:
-                                            Color(0xFFE5E5E5).withOpacity(0.5)),
+                                        color: Colors.grey.withOpacity(0.35)),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
@@ -218,8 +219,7 @@ class _HomePageState extends State<HomePage> {
                                     height: 27,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(27),
-                                        color:
-                                            Color(0xFFE5E5E5).withOpacity(0.5)),
+                                        color: Colors.grey.withOpacity(0.35)),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
