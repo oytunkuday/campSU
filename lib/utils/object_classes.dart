@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+//import 'package:flutter/material.dart';
 
-
-class userInfo{
+class UserInfo {
   var userName;
   var numFollowers;
   var followerArray = [];
@@ -11,28 +10,28 @@ class userInfo{
   var profilePic;
   var biology;
 
-  showUser(){
+  showUser() {
     print('User Name is: ${this.userName}');
     print('Number of followers is: ${this.numFollowers}');
     print('Number of followed people is: ${this.numFollowed}');
-    print('Number of posts is: ${this.nmPost}');
+    print('Number of posts is: ${this.nmPosts}');
     print('Users biology is ${this.biology}');
     print('URL of the profile picture is: ${this.profilePic}');
   }
 
-  showFollowers(){
+  showFollowers() {
     print(followerArray);
   }
 
-  showFollowed(){
+  showFollowed() {
     print(followedArray);
   }
 }
 
-class postInfo{
+class postInfo {
   var nmLikes;
   var likesArray = [];
-  var nmcomments;
+  var nmComments;
   var commentArray = [];
   var pictureURL;
 
@@ -42,51 +41,54 @@ class postInfo{
     print('URL of the picture: ${this.pictureURL}');
   }
 
-  showCommenters(){
+  showCommenters() {
     print(this.commentArray);
   }
 
-  showLikers(){
+  showLikers() {
     print(this.likesArray);
   }
-
+  
 }
 
-class searchResult(){
-var searchedWords;
-var searchStorage = [];
+class searchResult {
+  var searchedWords;
+  var searchStorage = [];
 
-addtoStorage(var searched){
-this.searchStorage.add(searched);
+  addtoStorage(var searched) {
+    this.searchStorage.add(searched);
+  }
 }
 
-}
+class notification {
+  var username;
+  var event;
 
-class notification(){
-var username;
-var event;
+  notify() {
+    switch (this.event) {
+      case 'like':
+        {
+          print('${this.username} liked your post.');
+        }
+        break;
 
-notify(){
-switch(this.event){
-case 'like':{
-print('${this.username} liked your post.');
-}
-break;
+      case 'comment':
+        {
+          print('${this.username} has commented on your post.');
+        }
+        break;
 
-case 'comment':{
-print('${this.username} has commented on your post.');
-}
-break;
+      case 'follow':
+        {
+          print('${this.username} followed you.');
+        }
+        break;
 
-case 'follow':{
-print('${this.username} followed you.')
-}
-break;
-
-case 'mention':{
-print('${this.username} has mentioned you in a post.')
-}
-break;
-}
-}
+      case 'mention':
+        {
+          print('${this.username} has mentioned you in a post.');
+        }
+        break;
+    }
+  }
 }
