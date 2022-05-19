@@ -23,7 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   Widget getAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.headColor,
     );
   }
 
@@ -38,52 +38,11 @@ class _ChatPageState extends State<ChatPage> {
               height: 20,
             ),
             Text(
-              "Messages",
+              "Notifications",
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 30,
-            ),
-            Container(
-              width: double.infinity,
-              height: 48,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 15,
-                        offset: Offset(0, 1))
-                  ]),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 5,
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.add_a_photo,
-                        color: Colors.black,
-                      )),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Flexible(
-                    child: TextField(
-                      cursorColor:Colors.black,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: "Search for contacts"),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 40,
             ),
             Column(
               children: List.generate(usersList.length, (index) {
@@ -136,7 +95,8 @@ class _ChatPageState extends State<ChatPage> {
                             children: [
                               Text(
                                 usersList[index]['name'],
-                                style: TextStyle(fontSize: 15, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 15, color: Colors.black),
                               ),
                               SizedBox(
                                 height: 5,

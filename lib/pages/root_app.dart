@@ -30,11 +30,11 @@ class _RootAppState extends State<RootApp> {
       index: activeTab,
       children: [
         HomePage(),
-        ChatPage(),
+        SavedPage(),
         Center(
           child: Text("31"),
         ),
-        SavedPage(),
+        ChatPage(),
         ProfilePage()
       ],
     );

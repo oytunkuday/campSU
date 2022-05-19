@@ -37,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar: PreferredSize(
           child: getAppBar(), preferredSize: Size.fromHeight(180)),
       body: getBody(),
@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget getAppBar() {
     return AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.postColor,
         flexibleSpace: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
