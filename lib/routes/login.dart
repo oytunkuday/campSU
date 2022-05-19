@@ -7,6 +7,7 @@ import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/utils/screenSizes.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:campsu/pages/root_app.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -24,50 +25,49 @@ class _LoginState extends State<Login> {
   Future<void> _showDialog(String title, String message) async {
     bool isAndroid = Platform.isAndroid;
     return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        if(isAndroid) {
-          return AlertDialog(
-            title: Text(title),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [
-                  Text(message),
-                ],
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          if (isAndroid) {
+            return AlertDialog(
+              title: Text(title),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(message),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        } else {
-          return CupertinoAlertDialog(
-            title: Text(title, style: kBoldLabelStyle),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: [
-                  Text(message, style: kLabelStyle),
-                ],
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          } else {
+            return CupertinoAlertDialog(
+              title: Text(title, style: kBoldLabelStyle),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: [
+                    Text(message, style: kLabelStyle),
+                  ],
+                ),
               ),
-            ),
-            actions: [
-              TextButton(
-                child: Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        }
-
-      });
+              actions: [
+                TextButton(
+                  child: Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          }
+        });
   }
 
   @override
@@ -116,11 +116,11 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   validator: (value) {
-                    if(value != null){
-                      if(value.isEmpty) {
+                    if (value != null) {
+                      if (value.isEmpty) {
                         return 'Cannot leave e-mail empty';
                       }
-                      if(!EmailValidator.validate(value)) {
+                      if (!EmailValidator.validate(value)) {
                         return 'Please enter a valid e-mail address';
                       }
                     }
@@ -130,7 +130,6 @@ class _LoginState extends State<Login> {
                   },
                 ),
               ),
-
               Container(
                 padding: EdgeInsets.all(8),
                 width: screenWidth(context, dividedBy: 1.1),
@@ -161,11 +160,11 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   validator: (value) {
-                    if(value != null){
-                      if(value.isEmpty) {
+                    if (value != null) {
+                      if (value.isEmpty) {
                         return 'Cannot leave password empty';
                       }
-                      if(value.length < 6) {
+                      if (value.length < 6) {
                         return 'Password too short';
                       }
                     }
@@ -175,19 +174,19 @@ class _LoginState extends State<Login> {
                   },
                 ),
               ),
-
               OutlinedButton(
                 onPressed: () {
-                  if(_formKey.currentState!.validate()) {
+                  if (_formKey.currentState!.validate()) {
                     print('Email: $email');
                     _formKey.currentState!.save();
                     print('Email: $email');
                     setState(() {
                       loginCounter++;
                     });
-
                   } else {
-                    _showDialog('Form Error', 'Your form is invalid');
+                    //_showDialog('Form Error', 'Your form is invalid');
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => RootApp()));
                   }
                 },
                 child: Padding(

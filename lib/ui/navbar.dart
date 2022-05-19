@@ -1,24 +1,28 @@
-
-
-/*import 'package:flutter/material.dart';
+/*
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:campsu/pages/chat_page.dart';
+import 'package:campsu/pages/home_page.dart';
+import 'package:campsu/pages/profile_page.dart';
+import 'package:campsu/pages/saved_page.dart';
 import 'package:campsu/utils/colors.dart';
 import 'dart:math' as math;
-import 'package:flutter_icons/flutter_icons.dart';
 
-class BottomBar extends StatefulWidget {
-  const BottomBar({Key? key}) : super(key: key);
+class RootApp extends StatefulWidget {
+  const RootApp({Key? key}) : super(key: key);
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  _RootAppState createState() => _RootAppState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _RootAppState extends State<RootApp> {
   int activeTab = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: getFooter(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: getFloatingButton(),
       body: getBody(),
     );
   }
@@ -45,13 +49,13 @@ class _BottomBarState extends State<BottomBar> {
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-              color: grey.withOpacity(0.1),
+              color: Colors.grey.withOpacity(0.1),
               spreadRadius: 1,
               blurRadius: 20,
               offset: Offset(0, 1)),
         ],
         borderRadius: BorderRadius.circular(20),
-        color: white,
+        color: Colors.white,
       ),
       child: Padding(
         padding: const EdgeInsets.only(left: 30, right: 30, top: 20),
@@ -70,7 +74,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Icon(
                     Feather.home,
                     size: 25,
-                    color: activeTab == 0 ? primary : black,
+                    color: activeTab == 0 ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -85,7 +89,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Icon(
                     MaterialIcons.chat_bubble_outline,
                     size: 25,
-                    color: activeTab == 1 ? primary : black,
+                    color: activeTab == 1 ? Colors.white : Colors.black,
                   ),
                 ),
               ],
@@ -101,7 +105,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Icon(
                     Feather.heart,
                     size: 25,
-                    color: activeTab == 3 ? primary : black,
+                    color: activeTab == 3 ? Colors.white : Colors.black,
                   ),
                 ),
                 SizedBox(
@@ -116,7 +120,7 @@ class _BottomBarState extends State<BottomBar> {
                   child: Icon(
                     MaterialIcons.account_circle,
                     size: 28,
-                    color: activeTab == 4 ? primary : black,
+                    color: activeTab == 4 ? Colors.white : Colors.black,
                   ),
                 ),
               ],
@@ -141,17 +145,17 @@ class _BottomBarState extends State<BottomBar> {
           height: 60,
           decoration: BoxDecoration(boxShadow: [
             BoxShadow(
-                color: grey.withOpacity(0.3),
+                color: Colors.grey.withOpacity(0.3),
                 spreadRadius: 2,
                 blurRadius: 15,
                 offset: Offset(0, 1)),
-          ], color: black, borderRadius: BorderRadius.circular(23)),
+          ], color: Colors.black, borderRadius: BorderRadius.circular(23)),
           child: Transform.rotate(
             angle: -math.pi / 4,
             child: Center(
                 child: Icon(
-              Ionicons.md_add_circle_outline,
-              color: white,
+              Icons.add_a_photo_outlined,
+              color: Colors.white,
               size: 26,
             )),
           ),
@@ -160,5 +164,4 @@ class _BottomBarState extends State<BottomBar> {
     );
   }
 }
-
 */
