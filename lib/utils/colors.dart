@@ -13,7 +13,7 @@ class AppColors {
 
 
   static const Color backgroundColor = Color(0xFFFFF8E1);
-  static const Color headingColor = Color(0xFFFFA000);
+  static const Color headColor = Color(0xFFFFA000);
   static const Color postColor = Color(0xFFFFC107);
   static const Color searchResultsColor = Color(0xFFFFECB3);
   static const Color greyColor = Color(0xFFC0C0C1);
