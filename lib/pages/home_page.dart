@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/post_json.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
+import 'package:campsu/utils/styles.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar:
           PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: getBody(),
@@ -24,25 +26,22 @@ class _HomePageState extends State<HomePage> {
   Widget getAppBar() {
     return AppBar(
       elevation: 0,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.headColor,
       title: Padding(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Social UI KIT",
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold),
+              "CampSU",
+              style: HeadingTextStyleBlack,
             ),
             IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  Icons.add_a_photo,
+                  Icons.message_outlined,
                   color: Colors.black,
-                  size: 25,
+                  size: 32,
                 ))
           ],
         ),
@@ -64,57 +63,13 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Feed",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  "Welcome to your daily dose of CampSU!",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
-                // story profile
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 58,
-                        height: 58,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            gradient: LinearGradient(colors: [
-                              Color(0xFFFFE0DF),
-                              Color(0xFFE1F6F4)
-                            ])),
-                        child: Center(
-                          child: Icon(
-                            Icons.add,
-                            color: Colors.black,
-                            size: 28,
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 30,
-                      ),
-                      Row(
-                        children: List.generate(usersList.length, (index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 30),
-                            child: Container(
-                              width: 58,
-                              height: 58,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image:
-                                          NetworkImage(usersList[index]['img']),
-                                      fit: BoxFit.cover)),
-                            ),
-                          );
-                        }),
-                      )
-                    ],
-                  ),
-                )
+                //
               ],
             ),
             SizedBox(
@@ -198,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                                     ],
                                   ),
                                   Icon(
-                                    Icons.add_a_photo,
+                                    Icons.share,
                                     color: Colors.white,
                                     size: 20,
                                   )
@@ -220,9 +175,9 @@ class _HomePageState extends State<HomePage> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(
-                                          Icons.add_a_photo,
+                                          CupertinoIcons.heart,
                                           color: Colors.white,
-                                          size: 14,
+                                          size: 15,
                                         ),
                                         Text(
                                           postsList[index]['like'],
@@ -245,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(
-                                          Icons.add_a_photo,
+                                          Icons.comment_outlined,
                                           color: Colors.white,
                                           size: 14,
                                         ),
@@ -270,9 +225,9 @@ class _HomePageState extends State<HomePage> {
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
                                         Icon(
-                                          Icons.add_a_photo,
+                                          Icons.save_alt_rounded,
                                           color: Colors.white,
-                                          size: 14,
+                                          size: 15,
                                         ),
                                         Text(
                                           postsList[index]['share'],

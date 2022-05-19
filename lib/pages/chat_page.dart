@@ -13,7 +13,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.backgroundColor,
       appBar:
           PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(0)),
       body: getBody(),
@@ -89,25 +89,31 @@ class _ChatPageState extends State<ChatPage> {
                           width: 20,
                         ),
                         Flexible(
-                          child: Column(
+                            child: Container(
+                          padding: EdgeInsets.all(0),
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                usersList[index]['name'],
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                              SizedBox(
-                                height: 5,
-                              ),
-                              Text(usersList[index]['message'],
+                              Container(
+                                padding: EdgeInsets.only(bottom: 0.0),
+                                child: Text(
+                                  usersList[index]['name'],
                                   style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.black.withOpacity(0.5)))
+                                      fontSize: 15, color: Colors.black),
+                                ),
+                              ),
+                              SizedBox(width: 5, height: 0),
+                              Expanded(
+                                child: Text(usersList[index]['message'],
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.black.withOpacity(0.5)),
+                                    overflow: TextOverflow.visible),
+                              )
                             ],
                           ),
-                        )
+                        ))
                       ],
                     ),
                   ),

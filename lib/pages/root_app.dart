@@ -32,7 +32,7 @@ class _RootAppState extends State<RootApp> {
         HomePage(),
         SavedPage(),
         Center(
-          child: Text("31"),
+          child: Text("This place should show your gallery lol"),
         ),
         ChatPage(),
         ProfilePage()

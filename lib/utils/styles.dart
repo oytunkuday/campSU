@@ -9,6 +9,12 @@ TextStyle? HeadingTextStyle = GoogleFonts.montserrat(
   letterSpacing: -0.6,
 );
 
+TextStyle? HeadingTextStyleBlack = GoogleFonts.montserrat(
+  color: Colors.black,
+  fontWeight: FontWeight.w900,
+  fontSize: 30.0,
+  letterSpacing: -0.6,
+);
 TextStyle? ButtonLightTextStyle = GoogleFonts.montserrat(
   color: AppColors.textColor,
   fontWeight: FontWeight.w700,

@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget getAppBar() {
     return AppBar(
         elevation: 0,
-        backgroundColor: AppColors.postColor,
+        backgroundColor: AppColors.headColor,
         flexibleSpace: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
