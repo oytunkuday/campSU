@@ -1,8 +1,10 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:video_player/video_player.dart';
-
+//sss
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -39,69 +41,44 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: PreferredSize(
-          child: getAppBar(), preferredSize: Size.fromHeight(180)),
+          preferredSize: const Size.fromHeight(180), child: getAppBar()),
       body: getBody(),
     );
   }
 
   Widget getAppBar() {
     return AppBar(
-        elevation: 0,
+        elevation: 2,
         backgroundColor: AppColors.headColor,
         flexibleSpace: SafeArea(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 75,
-              height: 75,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
-                  border: Border.all(color: Colors.black)),
-              child: Center(
-                child: Container(
-                  width: 70,
-                  height: 70,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: DecorationImage(
-                          image: NetworkImage(
-                              "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
-                          fit: BoxFit.cover)),
+            Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+            children: [
+              Container(
+                width: 75,
+                height: 75,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28),
+                    border: Border.all(color: Colors.black)),
+                child: Center(
+                  child: Container(
+                    width: 73,
+                    height: 73,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        image: const DecorationImage(
+                            image: NetworkImage(
+                                "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                            fit: BoxFit.cover)),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "Jonh Doe",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "@jonhdoe",
-              style: TextStyle(fontSize: 15),
-            ),
-          ],
-        )));
-  }
-
-  Widget getBody() {
-    var size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
               Column(
-                children: [
+                children: const [
                   Text(
                     "Posts",
                     style: TextStyle(fontSize: 15, color: Colors.black),
@@ -116,68 +93,104 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               Column(
+                // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  Text(
-                    "Followers",
+                  const Text(
+                    "Friends",
                     style: TextStyle(fontSize: 15, color: Colors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
-                  Text(
+                  const Text(
                     "1,552",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
-              Column(
-                children: [
-                  Text(
-                    "Follow",
-                    style: TextStyle(fontSize: 15, color: Colors.black),
-                  ),
-                  SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    "182",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            ]),
+            const SizedBox(
+              height: 8,
+            ),
+            const Text(
+              "Admin Bugsızkod",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Row(
             children: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isPhoto = true;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.add_a_photo,
-                    size: 25,
-                    color: isPhoto ? Colors.white : Colors.black,
-                  )),
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isPhoto = false;
-                    });
-                  },
-                  icon: Icon(
-                    Icons.add_a_photo,
-                    size: 30,
-                    color: !isPhoto ? Colors.white : Colors.black,
-                  ))
-            ],
+              const Text(
+              " @noBugs",
+              style: TextStyle(fontSize: 15, height: 1),
+             ),
+             TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(padding: const EdgeInsets.all(0), 
+                textStyle: TextStyle(
+                  height: 1
+                )
+              ),
+              child: const Text('     Edit Profile'),
+             )
+            ]
+            ),
+            const Text(
+              "Software Engineer at Sabanci University",
+              style: TextStyle(fontSize: 15),
+            ),
+          ],
+        )));
+  }
+
+  Widget getBody() {
+    var size = MediaQuery.of(context).size;
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            color: AppColors.postColor,
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              FlatButton(
+                color: AppColors.postColor,
+                textColor: Colors.black,
+                onPressed: () {
+                  setState(() {
+                   isPhoto = true;
+                 });
+               },
+                child: const Text(
+                 'All Posts',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+              FlatButton(
+                color: AppColors.postColor,
+               textColor: Colors.black,
+               onPressed: () {
+                 setState(() {
+                   isPhoto = false;
+                  });
+               },
+                child: const Text(
+                 'Videos',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+              ),
+             FlatButton(
+                color: AppColors.postColor,
+                textColor: Colors.black,
+                onPressed: () {
+                  setState(() {
+                    isPhoto = true;
+                 });
+                },
+               child: const Text(
+                 'Reposts',
+                  style: TextStyle(fontSize: 20.0),
+                ),
+             ),
+           ]),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           isPhoto
@@ -189,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: (size.width - 60) / 2,
                       height: (size.width - 60) / 2,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(10),
                           image: DecorationImage(
                               image: NetworkImage(mePostList[index]),
                               fit: BoxFit.cover)),
@@ -212,9 +225,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             image: DecorationImage(
                                 image: NetworkImage(meVideoList[index]['img']),
                                 fit: BoxFit.cover)),
-                        child: Center(
+                        child: const Center(
                           child: Icon(
-                            Icons.add_a_photo,
+                            Icons.play_arrow,
                             size: 40,
                             color: Colors.white,
                           ),
