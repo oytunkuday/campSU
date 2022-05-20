@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:video_player/video_player.dart';
-//sss
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -147,10 +147,10 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         children: [
           Container(
-            color: AppColors.postColor,
+            color: Color.fromARGB(255, 254, 202, 134),
             child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
               FlatButton(
-                color: AppColors.postColor,
+                color: const Color.fromARGB(255, 254, 202, 134),
                 textColor: Colors.black,
                 onPressed: () {
                   setState(() {
@@ -163,7 +163,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               FlatButton(
-                color: AppColors.postColor,
+                color: const Color.fromARGB(255, 254, 202, 134),
                textColor: Colors.black,
                onPressed: () {
                  setState(() {
@@ -176,7 +176,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
              FlatButton(
-                color: AppColors.postColor,
+                color: const Color.fromARGB(255, 254, 202, 134),
                 textColor: Colors.black,
                 onPressed: () {
                   setState(() {
@@ -202,7 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: (size.width - 60) / 2,
                       height: (size.width - 60) / 2,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius: BorderRadius.circular(8),
                           image: DecorationImage(
                               image: NetworkImage(mePostList[index]),
                               fit: BoxFit.cover)),
@@ -221,7 +221,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         width: (size.width - 60) / 2,
                         height: (size.width - 60) / 2,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(8),
                             image: DecorationImage(
                                 image: NetworkImage(meVideoList[index]['img']),
                                 fit: BoxFit.cover)),
