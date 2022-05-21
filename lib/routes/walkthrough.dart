@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
-import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/utils/styles.dart';
 
 class Walkthrough extends StatefulWidget {
@@ -15,13 +14,33 @@ class _WalkthroughState extends State<Walkthrough> {
   int currentPage = 0;
   int lastPage = 3;
 
-  List<String> title = ['Welcome', 'ready to start', 'campSU'];
+  List<String> title = [
+    'Welcome',
+    'Easily Get Stated',
+    'Stay In Touch',
+    'campSU'
+  ];
 
-  List<String> heading = [];
+  List<String> heading = [
+    'campSU',
+    'Sign Up Effortlessly',
+    'News About Everything Going On About Your Friends and The Campus',
+    'Everything Composed In a Single Application'
+  ];
 
-  List<String> image = [];
+  List<String> image = [
+    '/assets/images/happy.jpg',
+    '/assets/images/customize.jpg',
+    '/assets/images/stay_updated.jpg',
+    '/assets/images/community.jpg',
+  ];
 
-  List<String> caption = [];
+  List<String> caption = [
+    'Get connected with the campus.',
+    'Create and customize your profile...',
+    'Learn everything important about the campus and your friends.',
+    'Become a part of the community, stay updated about the campus news!'
+  ];
 
   void nextPage() {
     if (currentPage < lastPage) {
