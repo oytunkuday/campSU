@@ -60,7 +60,7 @@ class _editState extends State<EditProfile> {
                         labelStyle: kBoldLabelStyle,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.primary,
+                            color: Colors.purple,
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -88,7 +88,7 @@ class _editState extends State<EditProfile> {
                         labelStyle: kBoldLabelStyle,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.primary,
+                            color: Colors.purple,
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -118,7 +118,7 @@ class _editState extends State<EditProfile> {
                         labelStyle: kBoldLabelStyle,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.primary,
+                            color: Colors.purple,
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
@@ -148,7 +148,7 @@ class _editState extends State<EditProfile> {
                         labelStyle: kBoldLabelStyle,
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: AppColors.primary,
+                            color: Colors.purple,
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),

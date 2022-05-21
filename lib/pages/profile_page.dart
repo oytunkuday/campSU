@@ -1,10 +1,12 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:campsu/pages/saved_page.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:campsu/routes/editProfile.dart';
+import 'package:campsu/routes/settingsProfile.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -56,7 +58,11 @@ class _ProfilePageState extends State<ProfilePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Row(
+              children: [SizedBox(height: 6)],
+            ),
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              SizedBox(width: 1),
               Container(
                 width: 75,
                 height: 75,
@@ -107,12 +113,29 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ],
               ),
+              Column(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SettingsProfile()));
+                        ;
+                      },
+                      icon: Icon(
+                        Icons.settings,
+                        color: Colors.black,
+                        size: 32,
+                      ))
+                ],
+              )
             ]),
             const SizedBox(
               height: 8,
             ),
             const Text(
-              "Admin Bugsızkod",
+              " Admin Bugsızkod",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Row(children: [
@@ -134,7 +157,7 @@ class _ProfilePageState extends State<ProfilePage> {
               )
             ]),
             const Text(
-              "Software Engineer at Sabanci University",
+              " Software Engineer at Sabanci University",
               style: TextStyle(fontSize: 15),
             ),
           ],
@@ -177,19 +200,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
-                  FlatButton(
-                    color: const Color.fromARGB(255, 254, 202, 134),
-                    textColor: Colors.black,
-                    onPressed: () {
-                      setState(() {
-                        isPhoto = true;
-                      });
-                    },
-                    child: const Text(
-                      'Reposts',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SavedPage()));
+                        ;
+                      },
+                      icon: Icon(
+                        Icons.bookmark_border,
+                        color: Colors.black,
+                        size: 32,
+                      )),
                 ]),
           ),
           const SizedBox(
