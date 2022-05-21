@@ -41,6 +41,36 @@ class _editState extends State<EditProfile> {
                     padding: EdgeInsets.all(24),
                     width: screenWidth(context, dividedBy: 1.1),
                     child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        label: Container(
+                          width: 150,
+                          child: Row(
+                            children: [
+                              const Icon(Icons.person_outline_outlined),
+                              const SizedBox(width: 4),
+                              const Text('Name'),
+                            ],
+                          ),
+                        ),
+                        fillColor: AppColors.textFieldFillColor,
+                        filled: true,
+                        labelStyle: kBoldLabelStyle,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.primary,
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(24),
+                    width: screenWidth(context, dividedBy: 1.1),
+                    child: TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                         label: Container(
@@ -95,6 +125,37 @@ class _editState extends State<EditProfile> {
                       ),
                     ),
                   ),
+                  Container(
+                    padding: EdgeInsets.all(24),
+                    width: screenWidth(context, dividedBy: 1.1),
+                    child: TextFormField(
+                      keyboardType: TextInputType.text,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        label: Container(
+                          width: 150,
+                          child: Row(
+                            children: [
+                              const Icon(Icons.menu_book),
+                              const SizedBox(width: 4),
+                              const Text('Field'),
+                            ],
+                          ),
+                        ),
+                        fillColor: AppColors.textFieldFillColor,
+                        filled: true,
+                        labelStyle: kBoldLabelStyle,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColors.primary,
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30),
                   OutlinedButton(
                     onPressed: () {
                       Navigator.pop(context);
