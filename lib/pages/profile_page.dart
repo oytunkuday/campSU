@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:campsu/pages/saved_page.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
 import 'package:campsu/utils/colors.dart';
@@ -199,19 +200,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
-                  FlatButton(
-                    color: const Color.fromARGB(255, 254, 202, 134),
-                    textColor: Colors.black,
-                    onPressed: () {
-                      setState(() {
-                        isPhoto = true;
-                      });
-                    },
-                    child: const Text(
-                      'Reposts',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SavedPage()));
+                        ;
+                      },
+                      icon: Icon(
+                        Icons.bookmark_border,
+                        color: Colors.black,
+                        size: 32,
+                      )),
                 ]),
           ),
           const SizedBox(
