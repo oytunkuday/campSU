@@ -122,29 +122,37 @@ class _SignUpState extends State<SignUp> {
                 },
                 onSaved: (value) {},
               ),
-              RaisedButton(
-                onPressed: () {
-                  if (_formkey.currentState!.validate()) {
-                    // buraya girerse eğer, serbest bir fonksiyon yaz içinde setState olsun
-                    // build fonksiyonunu tekrar çalıştırsın ama butonun altında yazı olsun
-                    // düzgün yazdıramadın diye
+              Container(
+                  child: Column(
+                children: [
+                  RaisedButton(
+                    onPressed: () {
+                      if (_formkey.currentState!.validate()) {
+                        // buraya girerse eğer, serbest bir fonksiyon yaz içinde setState olsun
+                        // build fonksiyonunu tekrar çalıştırsın ama butonun altında yazı olsun
+                        // düzgün yazdıramadın diye
 
-                  } else {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomePage()));
-                  }
-                },
-                child: Text(
-                  "Sign Up!",
-                  style: TextStyle(),
-                ),
-              ),
-              MaterialButton(
-                child: Text("You have an account?\nLogin!"),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-              ),
+                      } else {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomePage()));
+                      }
+                    },
+                    child: Text(
+                      "Sign Up!",
+                      style: TextStyle(),
+                    ),
+                  ),
+                  MaterialButton(
+                    child: Text("You have an account?\nLogin!"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                  ),
+                ],
+              )),
+              SizedBox()
             ],
           ),
         ),
