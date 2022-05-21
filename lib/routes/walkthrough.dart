@@ -29,16 +29,16 @@ class _WalkthroughState extends State<Walkthrough> {
   ];
 
   List<String> image = [
-    '/assets/images/happy.jpg',
-    '/assets/images/customize.jpg',
-    '/assets/images/stay_updated.jpg',
-    '/assets/images/community.jpg',
+    'https://www.happierhuman.com/wp-content/uploads/2019/03/Happiness-Podcasts-to-Listen-To.jpg',
+    'https://images.squarespace-cdn.com/content/v1/50581344e4b093884eeaa66d/1384199536602-RB6FTJN05ZVLHHXJQ5OR/customize+button+small.jpg',
+    'https://www.thealdennetwork.com/wp-content/uploads/sites/63/2020/04/Alden-blog-2-April-600x511.png',
+    'https://cityofgood.sg/wp-content/uploads/2020/11/Success-3-scaled.jpg',
   ];
 
   List<String> caption = [
     'Get connected with the campus.',
     'Create and customize your profile...',
-    'Learn everything important about the campus and your friends.',
+    'Everything about your friends and the campus.',
     'Become a part of the community, stay updated about the campus news!'
   ];
 
@@ -46,7 +46,7 @@ class _WalkthroughState extends State<Walkthrough> {
     if (currentPage < lastPage) {
       setState(() {
         currentPage += 1;
-        word = 'Previous';
+        word = 'Prev';
       });
     } else if (currentPage == lastPage) {
       setState(() {
@@ -77,10 +77,10 @@ class _WalkthroughState extends State<Walkthrough> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.headColor,
         title: Text(
           title[currentPage].toUpperCase(),
-          style: HeadingTextStyle,
+          style: kAppBarTitleTextStyle,
         ),
         centerTitle: true,
       ),
@@ -102,7 +102,12 @@ class _WalkthroughState extends State<Walkthrough> {
               child: CircleAvatar(
                 backgroundColor: AppColors.backgroundColor,
                 radius: 175,
-                backgroundImage: AssetImage(image[currentPage]),
+                child: ClipOval(
+                  child: Image.network(
+                    image[currentPage],
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
             ),
             Center(
@@ -121,26 +126,20 @@ class _WalkthroughState extends State<Walkthrough> {
                       onPressed: prevPage,
                       child: Text(
                         word,
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                        ),
+                        style: kBoldLabelStyle,
                       ),
                     ),
                     Spacer(),
                     Text(
                       '${currentPage + 1}/${lastPage + 1}',
-                      style: TextStyle(
-                        color: AppColors.textColor,
-                      ),
+                      style: kBoldLabelStyle,
                     ),
                     Spacer(),
                     OutlinedButton(
                       onPressed: nextPage,
                       child: Text(
                         'Next',
-                        style: TextStyle(
-                          color: AppColors.textColor,
-                        ),
+                        style: kBoldLabelStyle,
                       ),
                     ),
                   ],
