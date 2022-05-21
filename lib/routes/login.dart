@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
           'LOGIN',
           style: kAppBarTitleTextStyle,
         ),
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.headColor,
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -98,10 +98,10 @@ class _LoginState extends State<Login> {
                     label: Container(
                       width: 100,
                       child: Row(
-                        children: [
-                          const Icon(Icons.email),
-                          const SizedBox(width: 4),
-                          const Text('Email'),
+                        children: const [
+                          Icon(Icons.email),
+                          SizedBox(width: 4),
+                          Text('Email'),
                         ],
                       ),
                     ),

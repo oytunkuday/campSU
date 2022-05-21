@@ -15,6 +15,7 @@ TextStyle? HeadingTextStyleBlack = GoogleFonts.montserrat(
   fontSize: 30.0,
   letterSpacing: -0.6,
 );
+
 TextStyle? ButtonLightTextStyle = GoogleFonts.montserrat(
   color: AppColors.textColor,
   fontWeight: FontWeight.w700,
@@ -57,4 +58,8 @@ final kBoldLabelStyle = GoogleFonts.montserrat(
 final kLabelStyle = GoogleFonts.montserrat(
   fontSize: 14.0,
   color: AppColors.textColor,
+);
+
+final kSignUpPageHeadStyle = GoogleFonts.montserrat(
+  fontSize: 31,
 );
