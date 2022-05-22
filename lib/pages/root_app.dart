@@ -4,6 +4,7 @@ import 'package:campsu/pages/home_page.dart';
 import 'package:campsu/pages/profile_page.dart';
 import 'package:campsu/pages/saved_page.dart';
 import 'package:campsu/utils/colors.dart';
+import 'package:campsu/pages/searchpage.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _RootAppState extends State<RootApp> {
       index: activeTab,
       children: [
         HomePage(),
-        SavedPage(),
+        searchScreen(),
         Center(
           child: Text("This place should show your gallery lol"),
         ),

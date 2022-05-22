@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
+import 'package:campsu/utils/styles.dart';
 
 Widget getAppBar() {
   return AppBar(
@@ -20,13 +21,19 @@ class _searchScreen extends State<searchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('campSU'), actions: <Widget>[
-        IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
-            })
-      ]),
+      appBar: AppBar(
+          title: Text(
+            "CampSU",
+            style: HeadingTextStyleBlack,
+          ),
+          backgroundColor: AppColors.headColor,
+          actions: <Widget>[
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  showSearch(context: context, delegate: DataSearch());
+                })
+          ]),
       drawer: Drawer(),
     );
   }
