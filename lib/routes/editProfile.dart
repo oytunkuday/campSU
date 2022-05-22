@@ -30,148 +30,196 @@ class _editState extends State<EditProfile> {
         ),
         body: Scaffold(
           backgroundColor: AppColors.backgroundColor,
-          body: Padding(
-            padding: Dimens.regularPadding,
-            child: Form(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 30),
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    width: screenWidth(context, dividedBy: 1.1),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        label: Container(
-                          width: 150,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.person_outline_outlined),
-                              const SizedBox(width: 4),
-                              const Text('Name'),
-                            ],
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: Dimens.regularPadding,
+              child: Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Center(
+                      child: Container(
+                        width: 73,
+                        height: 73,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            image: const DecorationImage(
+                                image: NetworkImage(
+                                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                                fit: BoxFit.cover)),
+                      ),
+                    ),
+                    Center(
+                      child: Container(
+                        child: const Text('Change',
+                            style: TextStyle(color: Colors.blue)),
+                      ),
+                    ),
+                    SizedBox(height: 5),
+                    Container(
+                      padding: EdgeInsets.all(24),
+                      width: screenWidth(context, dividedBy: 1.1),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: AppColors.postColor,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        fillColor: AppColors.textFieldFillColor,
-                        filled: true,
-                        labelStyle: kBoldLabelStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.purple,
+                          label: Container(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.person_outline_outlined),
+                                const SizedBox(width: 4),
+                                const Text('Name'),
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(30),
+                          fillColor: AppColors.textFieldFillColor,
+                          filled: true,
+                          labelStyle: kBoldLabelStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    width: screenWidth(context, dividedBy: 1.1),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        label: Container(
-                          width: 116,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.person),
-                              const SizedBox(width: 4),
-                              const Text('Nickname'),
-                            ],
+                    Container(
+                      padding: EdgeInsets.all(24),
+                      width: screenWidth(context, dividedBy: 1.1),
+                      child: TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: AppColors.postColor,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        fillColor: AppColors.textFieldFillColor,
-                        filled: true,
-                        labelStyle: kBoldLabelStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.purple,
+                          label: Container(
+                            width: 116,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.person),
+                                const SizedBox(width: 4),
+                                const Text('Nickname'),
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(30),
+                          fillColor: AppColors.textFieldFillColor,
+                          filled: true,
+                          labelStyle: kBoldLabelStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    width: screenWidth(context, dividedBy: 1.1),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        label: Container(
-                          width: 150,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.terrain_rounded),
-                              const SizedBox(width: 4),
-                              const Text('Biography'),
-                            ],
+                    Container(
+                      padding: EdgeInsets.all(24),
+                      width: screenWidth(context, dividedBy: 1.1),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: AppColors.postColor,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        fillColor: AppColors.textFieldFillColor,
-                        filled: true,
-                        labelStyle: kBoldLabelStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.purple,
+                          label: Container(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.terrain_rounded),
+                                const SizedBox(width: 4),
+                                const Text('Biography'),
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(30),
+                          fillColor: AppColors.textFieldFillColor,
+                          filled: true,
+                          labelStyle: kBoldLabelStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(24),
-                    width: screenWidth(context, dividedBy: 1.1),
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        label: Container(
-                          width: 150,
-                          child: Row(
-                            children: [
-                              const Icon(Icons.menu_book),
-                              const SizedBox(width: 4),
-                              const Text('Field'),
-                            ],
+                    Container(
+                      padding: EdgeInsets.all(24),
+                      width: screenWidth(context, dividedBy: 1.1),
+                      child: TextFormField(
+                        keyboardType: TextInputType.text,
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 2,
+                              color: AppColors.postColor,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
                           ),
-                        ),
-                        fillColor: AppColors.textFieldFillColor,
-                        filled: true,
-                        labelStyle: kBoldLabelStyle,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.purple,
+                          label: Container(
+                            width: 150,
+                            child: Row(
+                              children: [
+                                const Icon(Icons.menu_book),
+                                const SizedBox(width: 4),
+                                const Text('Field'),
+                              ],
+                            ),
                           ),
-                          borderRadius: BorderRadius.circular(30),
+                          fillColor: AppColors.textFieldFillColor,
+                          filled: true,
+                          labelStyle: kBoldLabelStyle,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.purple,
+                            ),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 30),
-                  OutlinedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text(
-                        'Save Changes',
-                        style: kButtonDarkTextStyle,
+                    SizedBox(height: 5),
+                    OutlinedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Text(
+                          'Save Changes',
+                          style: kButtonDarkTextStyle,
+                        ),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: AppColors.headColor,
                       ),
                     ),
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: AppColors.headColor,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),

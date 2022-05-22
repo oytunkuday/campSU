@@ -153,7 +153,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: TextButton.styleFrom(
                     padding: const EdgeInsets.all(0),
                     textStyle: TextStyle(height: 1)),
-                child: const Text('Edit Profile'),
+                child: const Text('Edit Profile',
+                    style: TextStyle(color: Colors.blue)),
               )
             ]),
             const Text(
