@@ -21,15 +21,18 @@ class _searchScreen extends State<searchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
           title: Text(
-            "CampSU",
-            style: HeadingTextStyleBlack,
+            "Search",
+            style: TextStyle(
+                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
           ),
           backgroundColor: AppColors.headColor,
           actions: <Widget>[
             IconButton(
                 icon: Icon(Icons.search),
+                color: Colors.black,
                 onPressed: () {
                   showSearch(context: context, delegate: DataSearch());
                 })
@@ -41,6 +44,21 @@ class _searchScreen extends State<searchScreen> {
 
 class DataSearch extends SearchDelegate<String> {
   @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      appBarTheme: const AppBarTheme(
+        color: AppColors.headColor, // affects AppBar's background color
+        textTheme: const TextTheme(
+            headline6: TextStyle(
+                // headline 6 affects the query text
+                color: Colors.white,
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold)),
+      ),
+    );
+  }
+
+  @override
   List<Widget>? buildActions(BuildContext context) {
     //Actions
     return [
@@ -48,7 +66,7 @@ class DataSearch extends SearchDelegate<String> {
           onPressed: () {
             query = '';
           },
-          icon: Icon(Icons.clear))
+          icon: Icon(Icons.clear)),
     ];
   }
 
@@ -68,6 +86,9 @@ class DataSearch extends SearchDelegate<String> {
   @override
   Widget buildResults(BuildContext context) {
     // Show Result Based On Selection
+    return Container(
+      color: AppColors.backgroundColor,
+    );
     throw UnimplementedError();
   }
 
