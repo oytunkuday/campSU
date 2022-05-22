@@ -1,8 +1,7 @@
-import 'package:campsu/routes/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
-import 'package:campsu/main.dart';
+import 'package:campsu/routes/welcome.dart';
 
 class Walkthrough extends StatefulWidget {
   const Walkthrough({Key? key}) : super(key: key);
@@ -38,10 +37,10 @@ class _WalkthroughState extends State<Walkthrough> {
   ];
 
   List<String> caption = [
-    'Get connected with the campus.',
-    'Create and customize your profile...',
-    'Everything about your friends and the campus.',
-    'Become a part of the community, stay updated about the campus news!'
+    ' Get connected with the campus.',
+    ' Create and customize your profile...',
+    ' Everything about your friends and the campus.',
+    ' Become a part of the community, stay updated about the campus news!'
   ];
 
   void nextPage() {
@@ -97,7 +96,7 @@ class _WalkthroughState extends State<Walkthrough> {
               padding: const EdgeInsets.fromLTRB(10, 25, 10, 25),
               child: Text(
                 heading[currentPage],
-                style: HeadingTextStyle,
+                style: ButtonLightTextStyle2,
               ),
             ),
             Container(
@@ -117,7 +116,7 @@ class _WalkthroughState extends State<Walkthrough> {
               padding: EdgeInsets.only(left: 10, right: 10),
               child: Text(
                 caption[currentPage],
-                style: HeadingTextStyle,
+                style: ButtonLightTextStyle2,
               ),
             ),
             Padding(
