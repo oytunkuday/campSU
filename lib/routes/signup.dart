@@ -26,8 +26,8 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'SIGNUP',
-          style: kAppBarTitleTextStyle,
+          ' SIGNUP',
+          style: HeadingTextStyleBlack,
         ),
         backgroundColor: AppColors.headColor,
         centerTitle: true,
@@ -145,7 +145,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   MaterialButton(
-                    child: Text("You have an account?\nLogin!"),
+                    child: Text("You have an account? Login!"),
                     onPressed: () {
                       Navigator.pushNamed(context, '/login');
                     },

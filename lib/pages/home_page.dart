@@ -5,6 +5,8 @@ import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
 
+import 'messages.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -37,7 +39,10 @@ class _HomePageState extends State<HomePage> {
               style: HeadingTextStyleBlack,
             ),
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Messages()));
+                },
                 icon: Icon(
                   Icons.message_outlined,
                   color: Colors.black,

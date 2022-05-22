@@ -1,6 +1,8 @@
+import 'package:campsu/routes/welcome.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
+import 'package:campsu/main.dart';
 
 class Walkthrough extends StatefulWidget {
   const Walkthrough({Key? key}) : super(key: key);
@@ -50,7 +52,8 @@ class _WalkthroughState extends State<Walkthrough> {
       });
     } else if (currentPage == lastPage) {
       setState(() {
-        Navigator.pushNamed(context, '/welcome');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Welcome()));
       });
     }
   }
@@ -58,7 +61,8 @@ class _WalkthroughState extends State<Walkthrough> {
   void prevPage() {
     if (currentPage == 0) {
       setState(() {
-        Navigator.pushNamed(context, '/welcome');
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Welcome()));
       });
     } else if (currentPage > 0) {
       setState(() {
