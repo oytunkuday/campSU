@@ -1,8 +1,11 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/pages/home_page.dart';
+
+import '../pages/root_app.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -48,8 +51,9 @@ class _SignUpState extends State<SignUp> {
                   ),
                   hintText: "Please enter your name",
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
+                validator: (value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Name field cannot be empty";
                   } else {
                     return null;
                   }
@@ -65,8 +69,9 @@ class _SignUpState extends State<SignUp> {
                   ),
                   hintText: "Please enter your surname",
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
+                validator: (value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Surname field cannot be empty";
                   } else {
                     return null;
                   }
@@ -76,14 +81,18 @@ class _SignUpState extends State<SignUp> {
                 },
               ),
               TextFormField(
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(),
                   ),
                   hintText: "Please enter your mail address",
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
+                validator: (value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Email address cannot be empty";
+                  } else if (!EmailValidator.validate(value!)) {
+                    return "please enter a valid email";
                   } else {
                     return null;
                   }
@@ -93,14 +102,18 @@ class _SignUpState extends State<SignUp> {
                 },
               ),
               TextFormField(
+                controller: _password,
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(),
                   ),
                   hintText: "Please enter your password",
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
+                validator: (value) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Password cannot be empty";
                   } else {
                     return null;
                   }
@@ -108,6 +121,8 @@ class _SignUpState extends State<SignUp> {
                 onSaved: (value) {},
               ),
               TextFormField(
+                obscureText: true,
+                controller: _confirmpasword,
                 decoration: const InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(),
@@ -115,7 +130,10 @@ class _SignUpState extends State<SignUp> {
                   hintText: "Please enter your password again",
                 ),
                 validator: (String? value) {
-                  if (value!.isEmpty) {
+                  if (value != null && value.trim().isEmpty) {
+                    return "Password cannot be empty";
+                  } else if (value != _password.text) {
+                    return "Passwords do not match";
                   } else {
                     return null;
                   }
@@ -125,18 +143,13 @@ class _SignUpState extends State<SignUp> {
               Container(
                   child: Column(
                 children: [
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: () {
-                      if (_formkey.currentState!.validate()) {
-                        // buraya girerse eğer, serbest bir fonksiyon yaz içinde setState olsun
-                        // build fonksiyonunu tekrar çalıştırsın ama butonun altında yazı olsun
-                        // düzgün yazdıramadın diye
-
+                      if (!_formkey.currentState!.validate()) {
+                        return null;
                       } else {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => HomePage()));
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => RootApp()));
                       }
                     },
                     child: Text(

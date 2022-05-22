@@ -93,14 +93,18 @@ class _LoginState extends State<Login> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                     hintText: "Please enter your email address",
                   ),
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
+                  validator: (value) {
+                    if (value != null && value.trim().isEmpty) {
+                      return "Email address cannot be empty";
+                    } else if (!EmailValidator.validate(value!)) {
+                      return "please enter a valid email";
                     } else {
                       return null;
                     }
@@ -111,14 +115,16 @@ class _LoginState extends State<Login> {
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
+                  obscureText: true,
                   decoration: const InputDecoration(
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(),
                     ),
                     hintText: "Please enter your password",
                   ),
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
+                  validator: (value) {
+                    if (value != null && value.trim().isEmpty) {
+                      return "Please enter your password";
                     } else {
                       return null;
                     }
@@ -128,22 +134,14 @@ class _LoginState extends State<Login> {
                   },
                 ),
                 const SizedBox(height: 16),
-                RaisedButton(
+                ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // buraya girerse eğer, serbest bir fonksiyon yaz içinde setState olsun
-                      // build fonksiyonunu tekrar çalıştırsın ama butonun altında yazı olsun
-                      // düzgün yazdıramadın diye
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()));
-                    } else {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomePage()));
-                    }
+                              builder: (context) => const RootApp()));
+                    } else {}
                   },
                   child: const Text(
                     "Log in!",
