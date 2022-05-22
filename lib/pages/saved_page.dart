@@ -16,16 +16,30 @@ class _SavedPageState extends State<SavedPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar:
-          PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(0)),
+          PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: getBody(),
-      
     );
   }
 
   Widget getAppBar() {
     return AppBar(
-      backgroundColor: AppColors.headColor,
       elevation: 0,
+      backgroundColor: AppColors.headColor,
+      title: Padding(
+        padding: const EdgeInsets.only(right: 35),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Saved",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -41,10 +55,6 @@ class _SavedPageState extends State<SavedPage> {
               children: [
                 SizedBox(
                   height: 20,
-                ),
-                Text(
-                  "Saved",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 30,

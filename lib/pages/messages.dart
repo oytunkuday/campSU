@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/data/message_samples.dart';
+import 'package:campsu/pages/root_app.dart';
 
 class Messages extends StatefulWidget {
   const Messages({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _MessagesState extends State<Messages> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar:
-          PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(0)),
+          PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: getBody(),
     );
   }
@@ -25,6 +26,21 @@ class _MessagesState extends State<Messages> {
     return AppBar(
       elevation: 0,
       backgroundColor: AppColors.headColor,
+      title: Padding(
+        padding: const EdgeInsets.only(right: 35),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Messages",
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -37,10 +53,6 @@ class _MessagesState extends State<Messages> {
           children: [
             SizedBox(
               height: 20,
-            ),
-            Text(
-              "Messages",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 30,
