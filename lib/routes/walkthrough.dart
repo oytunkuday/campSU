@@ -92,13 +92,11 @@ class _WalkthroughState extends State<Walkthrough> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 25),
-                child: Text(
-                  heading[currentPage],
-                  style: HeadingTextStyle,
-                ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(10, 25, 10, 25),
+              child: Text(
+                heading[currentPage],
+                style: HeadingTextStyle,
               ),
             ),
             Container(
@@ -114,7 +112,8 @@ class _WalkthroughState extends State<Walkthrough> {
                 ),
               ),
             ),
-            Center(
+            Padding(
+              padding: EdgeInsets.only(left: 10, right: 10),
               child: Text(
                 caption[currentPage],
                 style: HeadingTextStyle,
