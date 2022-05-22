@@ -4,7 +4,6 @@ import 'package:campsu/pages/home_page.dart';
 import 'package:campsu/pages/profile_page.dart';
 import 'package:campsu/pages/saved_page.dart';
 import 'package:campsu/utils/colors.dart';
-import 'dart:math' as math;
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
