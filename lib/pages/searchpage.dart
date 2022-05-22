@@ -50,7 +50,7 @@ class DataSearch extends SearchDelegate<String> {
     //Leading Icon
     return IconButton(
         onPressed: () {
-          close(context, null);
+          //close(context, null);
         },
         icon: AnimatedIcon(
           icon: AnimatedIcons.arrow_menu,

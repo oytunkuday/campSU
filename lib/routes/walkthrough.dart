@@ -15,14 +15,14 @@ class _WalkthroughState extends State<Walkthrough> {
   int lastPage = 3;
 
   List<String> title = [
-    'Welcome',
+    'Welcome to CampSU!',
     'Easily Get Stated',
     'Stay In Touch',
-    'campSU'
+    'CampSU'
   ];
 
   List<String> heading = [
-    'campSU',
+    'CampSU',
     'Sign Up Effortlessly',
     'News About Everything Going On About Your Friends and The Campus',
     'Everything Composed In a Single Application'
@@ -87,6 +87,7 @@ class _WalkthroughState extends State<Walkthrough> {
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: Padding(
@@ -98,7 +99,7 @@ class _WalkthroughState extends State<Walkthrough> {
               ),
             ),
             Container(
-              height: 350,
+              height: 340,
               child: CircleAvatar(
                 backgroundColor: AppColors.backgroundColor,
                 radius: 175,
