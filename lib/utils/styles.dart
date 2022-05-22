@@ -23,6 +23,13 @@ TextStyle? ButtonLightTextStyle = GoogleFonts.montserrat(
   letterSpacing: -0.4,
 );
 
+TextStyle? ButtonLightTextStyle2 = GoogleFonts.montserrat(
+  color: AppColors.textColor,
+  fontWeight: FontWeight.w700,
+  fontSize: 20.0,
+  letterSpacing: -0.1,
+);
+
 TextStyle? ButtonDarkTextStyle = GoogleFonts.montserrat(
   color: AppColors.darkButtonTextColor,
   fontWeight: FontWeight.w700,
