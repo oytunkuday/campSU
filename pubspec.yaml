@@ -1,6 +1,5 @@
 name: campsu
 description: A new Flutter project.
-firebase_core: ^1.17.1
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -39,7 +38,6 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   shared_preferences: ^2.0.15
-  firebase_core: ^1.17.1
 
 dev_dependencies:
   flutter_test:
