@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/routes/login.dart';
 import 'package:campsu/pages/root_app.dart';
@@ -7,7 +9,10 @@ import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/utils/styles.dart';
 
 class Welcome extends StatelessWidget {
-  const Welcome({Key? key}) : super(key: key);
+  const Welcome({Key? key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
 
   @override
   Widget build(BuildContext context) {

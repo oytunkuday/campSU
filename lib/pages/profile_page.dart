@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:campsu/pages/saved_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
 import 'package:campsu/utils/colors.dart';
@@ -19,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool isPhoto = true;
 
   late VideoPlayerController _controller;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -52,6 +53,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget getAppBar() {
     return AppBar(
         elevation: 2,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                await _auth.signOut();
+                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+              },
+              icon: Icon(Icons.logout))
+        ],
         backgroundColor: AppColors.headColor,
         flexibleSpace: SafeArea(
             child: Column(

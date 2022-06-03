@@ -1,5 +1,7 @@
 import 'dart:io' show Platform;
-
+import 'dart:convert';
+import 'package:campsu/routes/api.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
@@ -9,19 +11,73 @@ import 'package:campsu/utils/styles.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:campsu/pages/root_app.dart';
 import 'package:campsu/pages/home_page.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:campsu/utils/auth.dart';
+
+import '../model/user.dart';
 
 class Login extends StatefulWidget {
   @override
   _LoginState createState() => _LoginState();
 
   static const String routeName = '/login';
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 }
 
 class _LoginState extends State<Login> {
   int loginCounter = 0;
   final _formKey = GlobalKey<FormState>();
-  String? _email = '';
-  String? _pass = '';
+  String email = '';
+  String pass = '';
+  late String s;
+
+  final AuthService _auth = AuthService();
+
+  Future loginUser() async {
+    dynamic result = await _auth.signInWithEmailPass(email, pass);
+    if (result is String) {
+      _showDialog('Login Error', result);
+    } else if (result is User) {
+      //User signed in
+      Navigator.pushNamedAndRemoveUntil(context, '/rootapp', (route) => false);
+    } else {
+      _showDialog('Login Error', result.toString());
+    }
+  }
+
+  Future getUsers() async {
+    final url = Uri.parse(API.allUsers);
+    final response = await http.get(Uri.https(url.authority, url.path));
+
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      //SUCCESS
+      //_showDialog('HTTP: ${response.statusCode}', response.body);
+      /*
+      Map<String, dynamic> post = jsonDecode(response.body);
+      JsonPost newPost = JsonPost(
+          title: post['title'],
+          body: post['body'],
+          userId: post['userId'],
+          postId: post['id']);
+      print(newPost);
+      */
+      var responseList = jsonDecode(response.body) as List;
+      /*
+      List<JsonPost> items = responseList.map(
+              (postItem) => JsonPost.fromJson(postItem)
+      ).toList();
+      print('${items[10]}');
+       */
+
+      List<MyUser> users =
+          responseList.map((user) => MyUser.fromJson(user)).toList();
+      print('Latitude: ${users[1]}');
+      print('Longitude: ${users[1]}');
+    } else {
+      _showDialog('HTTP: ${response.statusCode}', response.body);
+    }
+  }
 
   Future<void> _showDialog(String title, String message) async {
     bool isAndroid = Platform.isAndroid;
@@ -72,6 +128,22 @@ class _LoginState extends State<Login> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    s = '';
+
+    FirebaseAuth.instance.authStateChanges().listen((user){
+      if(user==null){
+        
+      }
+      else{
+        Navigator.pushNamedAndRemoveUntil(context, '/rootapp', (route) => false);
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -109,8 +181,8 @@ class _LoginState extends State<Login> {
                       return null;
                     }
                   },
-                  onSaved: (String? value) {
-                    _email = value;
+                  onSaved: (value) {
+                    email = value ?? '';
                   },
                 ),
                 const SizedBox(height: 16),
@@ -129,25 +201,45 @@ class _LoginState extends State<Login> {
                       return null;
                     }
                   },
-                  onSaved: (String? value) {
-                    _pass = value;
+                  onSaved: (value) {
+                    pass = value ?? "";
                   },
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const RootApp()));
-                    } else {}
+                      _formKey.currentState!.save();
+                      await loginUser();
+                      setState(() {});
+                    } else {
+                      _showDialog('Form Error', 'Your form is invalid');
+                    }
                   },
                   child: const Text(
                     "Log in!",
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                     ),
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: () async {
+                    dynamic user = await _auth.signInWithGoogle();
+                    if (user != null) {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/profile', (route) => false);
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                    child: Text(
+                      'Sign in with Gmail',
+                      style: kButtonDarkTextStyle,
+                    ),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: AppColors.headingColor,
                   ),
                 ),
                 MaterialButton(
@@ -163,4 +255,6 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
+  
 }

@@ -1,4 +1,7 @@
 import 'package:campsu/utils/colors.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/ui/navbar.dart';
 import 'package:campsu/pages/root_app.dart';
@@ -6,9 +9,11 @@ import 'package:campsu/routes/login.dart';
 import 'package:campsu/routes/signup.dart';
 import 'package:campsu/routes/welcome.dart';
 import 'package:campsu/routes/walkthrough.dart';
+import 'package:provider/provider.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'utils/auth.dart';
+import 'package:firebase_analytics/observer.dart';
 /*
 void main() {
   runApp(MaterialApp(
@@ -31,12 +36,98 @@ void main() {
 */
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
+}
+
+class MyFirebaseApp extends StatelessWidget {
+  final Future<FirebaseApp> _init = Firebase.initializeApp();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: _init,
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return ErrorScreen(message: snapshot.error.toString());
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          return StreamProvider<User?>.value(
+            value: AuthService().user,
+            initialData: null,
+            child: AuthenticationStatus(),
+          );
+        }
+        return const WaitingScreen();
+      },
+    );
+  }
+}
+
+class ErrorScreen extends StatelessWidget {
+  const ErrorScreen({Key? key, required this.message}) : super(key: key);
+
+  final String message;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('CS310 Spring'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text(message),
+      ),
+    );
+  }
+}
+
+class AuthenticationStatus extends StatefulWidget {
+  const AuthenticationStatus({Key? key}) : super(key: key);
+
+  @override
+  State<AuthenticationStatus> createState() => _AuthenticationStatusState();
+}
+
+class _AuthenticationStatusState extends State<AuthenticationStatus> {
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
+
+  @override
+  Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
+
+    if (user == null) {
+      return Welcome(analytics: analytics, observer: observer);
+    } else {
+      return RootApp(analytics: analytics, observer: observer);
+    }
+  }
+}
+
+class WaitingScreen extends StatelessWidget {
+  const WaitingScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: const Text('Connecting to Firebase',
+              style: TextStyle(
+                fontSize: 24,
+              )),
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
-
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -52,6 +143,9 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static FirebaseAnalyticsObserver observer =
+      FirebaseAnalyticsObserver(analytics: analytics);
   initState() {
     super.initState();
     decideRoute();
@@ -66,6 +160,7 @@ class _MyAppState extends State<MyApp> {
       prefs!.setInt('appInitialLoad', firstLoad!);
       return MaterialApp(
         // initialRoute: '/login',
+        home: MyFirebaseApp(),
         theme: ThemeData(
           primaryColor: Colors.amber,
           colorScheme: ColorScheme.fromSwatch(
@@ -75,7 +170,8 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/walkthrough',
         routes: {
           '/walkthrough': (context) => Walkthrough(),
-          '/': (context) => const Welcome(),
+          '/': (context) => Welcome(analytics: analytics, observer: observer),
+          RootApp.routeName: (context) => RootApp(),
           SignUp.routeName: (context) => SignUp(),
           Login.routeName: (context) => Login(),
         },
@@ -83,6 +179,8 @@ class _MyAppState extends State<MyApp> {
     } else {
       return MaterialApp(
         // initialRoute: '/login',
+        navigatorObservers: <NavigatorObserver>[observer],
+        home: Welcome(analytics: analytics, observer: observer),
         theme: ThemeData(
           primaryColor: Colors.amber,
           colorScheme: ColorScheme.fromSwatch(
@@ -92,7 +190,8 @@ class _MyAppState extends State<MyApp> {
         initialRoute: '/',
         routes: {
           '/walkthrough': (context) => Walkthrough(),
-          '/': (context) => const Welcome(),
+          '/': (context) => Welcome(analytics: analytics, observer: observer),
+          RootApp.routeName: (context) => RootApp(),
           SignUp.routeName: (context) => SignUp(),
           Login.routeName: (context) => Login(),
         },

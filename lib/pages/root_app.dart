@@ -5,16 +5,27 @@ import 'package:campsu/pages/profile_page.dart';
 import 'package:campsu/pages/saved_page.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/pages/searchpage.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 class RootApp extends StatefulWidget {
-  const RootApp({Key? key}) : super(key: key);
-
+  const RootApp({Key? key, this.analytics, this.observer}) : super(key: key);
+final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
   @override
   _RootAppState createState() => _RootAppState();
+  
+
+  static const String routeName = '/rootapp';
 }
 
 class _RootAppState extends State<RootApp> {
   int activeTab = 0;
+  String _message = '';
+  void setMessage(String msg) {
+    setState(() {
+      _message = msg;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +34,20 @@ class _RootAppState extends State<RootApp> {
       floatingActionButton: getFloatingButton(),
       body: getBody(),
     );
+  }
+
+  Future<void> _setLogEvent() async {
+    await widget.analytics?.logEvent(
+      name: 'CS310_Test',
+      parameters: <String, dynamic> {
+        'string': 'string',
+        'int': 310,
+        'long': 1234567890123,
+        'double': 310.202002,
+        'bool': true,
+      }
+    );
+    setMessage('Custom event log succeeded');
   }
 
   Widget getBody() {
