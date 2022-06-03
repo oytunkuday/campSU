@@ -160,7 +160,6 @@ class _MyAppState extends State<MyApp> {
       prefs!.setInt('appInitialLoad', firstLoad!);
       return MaterialApp(
         // initialRoute: '/login',
-        home: MyFirebaseApp(),
         theme: ThemeData(
           primaryColor: Colors.amber,
           colorScheme: ColorScheme.fromSwatch(
@@ -180,7 +179,6 @@ class _MyAppState extends State<MyApp> {
       return MaterialApp(
         // initialRoute: '/login',
         navigatorObservers: <NavigatorObserver>[observer],
-        home: Welcome(analytics: analytics, observer: observer),
         theme: ThemeData(
           primaryColor: Colors.amber,
           colorScheme: ColorScheme.fromSwatch(

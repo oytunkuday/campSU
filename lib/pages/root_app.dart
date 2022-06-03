@@ -58,6 +58,34 @@ class _RootAppState extends State<RootApp> {
         searchScreen(),
         Center(
           child: Text("This place should show your gallery lol"),
+          /*
+          class _MyAppState extends State<MyApp> {
+  final ImagePicker _picker = ImagePicker();
+  XFile? _image;
+
+  Future pickImage() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = pickedFile;
+    });
+  }
+
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = basename(_image!.path);
+    Reference firebaseStorageRef = FirebaseStorage.instance.ref().child('uploads/$fileName');
+    try {
+      await firebaseStorageRef.putFile(File(_image!.path));
+      print("Upload complete");
+      setState(() {
+        _image = null;
+      });
+    } on FirebaseException catch(e) {
+      print('ERROR: ${e.code} - ${e.message}');
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+*/
         ),
         ChatPage(),
         ProfilePage()
