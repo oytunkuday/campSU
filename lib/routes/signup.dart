@@ -1,5 +1,6 @@
 import 'package:campsu/utils/auth.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
@@ -28,8 +29,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:campsu/utils/auth.dart';
 
 import '../model/user.dart';
+import 'package:campsu/utils/db.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignUp extends StatefulWidget {
+  const SignUp({Key? key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
   @override
   _SignUpState createState() => _SignUpState();
 
@@ -47,7 +55,7 @@ class _SignUpState extends State<SignUp> {
   final AuthService _auth = AuthService();
   TextEditingController _password = TextEditingController();
   TextEditingController _confirmpasword = TextEditingController();
-
+  DBService db = DBService();
   Future<void> _showDialog(String title, String message) async {
     bool isAndroid = Platform.isAndroid;
     return showDialog(
@@ -102,7 +110,8 @@ class _SignUpState extends State<SignUp> {
       _showDialog('Sign Up Error', result);
     } else if (result is User) {
       //User signed in
-      Navigator.pushNamedAndRemoveUntil(context, '/rootapp', (route) => false);
+
+      Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
     } else {
       _showDialog('Sign Up Error', result.toString());
     }
@@ -110,6 +119,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   void initState() {
+    _setCurrentScreen();
     // TODO: implement initState
     super.initState();
     s = '';
@@ -123,8 +133,16 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
+  Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'SignUp Page',
+      screenClassOverride: 'signupPage',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    _setCurrentScreen();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -249,6 +267,9 @@ class _SignUpState extends State<SignUp> {
                       onPressed: () async {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
+
+                          db.addUserAutoID(name, email, 'token');
+                          print("selamlar");
                           await signUser();
                           setState(() {});
                         } else {

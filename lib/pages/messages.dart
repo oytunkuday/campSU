@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
@@ -5,8 +7,11 @@ import 'package:campsu/data/message_samples.dart';
 import 'package:campsu/pages/root_app.dart';
 
 class Messages extends StatefulWidget {
-  const Messages({Key? key}) : super(key: key);
-
+  const Messages({Key? key, this.analytics, this.observer}) : super(key: key);
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
+  static const String routeName = '/messages';
+  
   @override
   _MessagesState createState() => _MessagesState();
 }
@@ -19,6 +24,12 @@ class _MessagesState extends State<Messages> {
       appBar:
           PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: getBody(),
+    );
+  }
+    Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'Messages Page',
+      screenClassOverride: 'messagesPage',
     );
   }
 

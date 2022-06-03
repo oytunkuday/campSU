@@ -1,6 +1,8 @@
 import 'dart:io' show Platform;
 import 'dart:convert';
 import 'package:campsu/routes/api.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,11 @@ import 'package:campsu/utils/auth.dart';
 import '../model/user.dart';
 
 class Login extends StatefulWidget {
+  Login({Key? key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
+
   @override
   _LoginState createState() => _LoginState();
 
@@ -34,13 +41,21 @@ class _LoginState extends State<Login> {
 
   final AuthService _auth = AuthService();
 
+  Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'Login Page',
+      screenClassOverride: 'loginPage',
+    );
+  }
+
   Future loginUser() async {
     dynamic result = await _auth.signInWithEmailPass(email, pass);
     if (result is String) {
       _showDialog('Login Error', result);
     } else if (result is User) {
       //User signed in
-      Navigator.pushNamedAndRemoveUntil(context, '/rootapp', (route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, RootApp.routeName, (route) => false);
     } else {
       _showDialog('Login Error', result.toString());
     }
@@ -129,22 +144,23 @@ class _LoginState extends State<Login> {
 
   @override
   void initState() {
+    _setCurrentScreen();
     // TODO: implement initState
     super.initState();
     s = '';
 
-    FirebaseAuth.instance.authStateChanges().listen((user){
-      if(user==null){
-        
-      }
-      else{
-        Navigator.pushNamedAndRemoveUntil(context, '/rootapp', (route) => false);
+    FirebaseAuth.instance.authStateChanges().listen((user) {
+      if (user == null) {
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/rootapp', (route) => false);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    _setCurrentScreen();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -155,106 +171,106 @@ class _LoginState extends State<Login> {
         centerTitle: true,
         elevation: 0.0,
       ),
-      body: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20),
-        child: Form(
-          key: _formKey,
-          child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextFormField(
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Form(
+            key: _formKey,
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                      hintText: "Please enter your email address",
                     ),
-                    hintText: "Please enter your email address",
+                    validator: (value) {
+                      if (value != null && value.trim().isEmpty) {
+                        return "Email address cannot be empty";
+                      } else if (!EmailValidator.validate(value!)) {
+                        return "please enter a valid email";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      email = value ?? '';
+                    },
                   ),
-                  validator: (value) {
-                    if (value != null && value.trim().isEmpty) {
-                      return "Email address cannot be empty";
-                    } else if (!EmailValidator.validate(value!)) {
-                      return "please enter a valid email";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    email = value ?? '';
-                  },
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(),
+                      ),
+                      hintText: "Please enter your password",
                     ),
-                    hintText: "Please enter your password",
+                    validator: (value) {
+                      if (value != null && value.trim().isEmpty) {
+                        return "Please enter your password";
+                      } else {
+                        return null;
+                      }
+                    },
+                    onSaved: (value) {
+                      pass = value ?? "";
+                    },
                   ),
-                  validator: (value) {
-                    if (value != null && value.trim().isEmpty) {
-                      return "Please enter your password";
-                    } else {
-                      return null;
-                    }
-                  },
-                  onSaved: (value) {
-                    pass = value ?? "";
-                  },
-                ),
-                const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      await loginUser();
-                      setState(() {});
-                    } else {
-                      _showDialog('Form Error', 'Your form is invalid');
-                    }
-                  },
-                  child: const Text(
-                    "Log in!",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-                OutlinedButton(
-                  onPressed: () async {
-                    dynamic user = await _auth.signInWithGoogle();
-                    if (user != null) {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, '/profile', (route) => false);
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0),
-                    child: Text(
-                      'Sign in with Gmail',
-                      style: kButtonDarkTextStyle,
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        await loginUser();
+                        setState(() {});
+                      } else {
+                        _showDialog('Form Error', 'Your form is invalid');
+                      }
+                    },
+                    child: const Text(
+                      "Log in!",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                   ),
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: AppColors.headingColor,
+                  OutlinedButton(
+                    onPressed: () async {
+                      dynamic user = await _auth.signInWithGoogle();
+                      if (user != null) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/rootapp', (route) => false);
+                      }
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'Sign in with Gmail',
+                        style: kButtonDarkTextStyle,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: AppColors.headingColor,
+                    ),
                   ),
-                ),
-                MaterialButton(
-                  child: const Text("Don't have an account? Sign up!"),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signup');
-                  },
-                ),
-              ],
+                  MaterialButton(
+                    child: const Text("Don't have an account? Sign up!"),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/signup');
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
     );
   }
-
-  
 }

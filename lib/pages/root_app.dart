@@ -1,3 +1,4 @@
+import 'package:campsu/pages/upload_page.dart';
 import 'package:flutter/material.dart';
 import "package:campsu/pages/chat_page.dart";
 import 'package:campsu/pages/home_page.dart';
@@ -7,13 +8,13 @@ import 'package:campsu/utils/colors.dart';
 import 'package:campsu/pages/searchpage.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
+
 class RootApp extends StatefulWidget {
   const RootApp({Key? key, this.analytics, this.observer}) : super(key: key);
-final FirebaseAnalytics? analytics;
+  final FirebaseAnalytics? analytics;
   final FirebaseAnalyticsObserver? observer;
   @override
   _RootAppState createState() => _RootAppState();
-  
 
   static const String routeName = '/rootapp';
 }
@@ -26,6 +27,35 @@ class _RootAppState extends State<RootApp> {
       _message = msg;
     });
   }
+
+  Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'HomePage',
+      screenClassOverride: 'root_app',
+    );
+  }
+
+  Future<void> _setCurrentScreen1() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'Notifications',
+      screenClassOverride: 'Notif_page',
+    );
+  }
+
+  Future<void> _setCurrentScreen2() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'SearchPage',
+      screenClassOverride: 'Search_app',
+    );
+  }
+
+  Future<void> _setCurrentScreen3() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'ProfilePage',
+      screenClassOverride: 'profile_app',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,16 +67,14 @@ class _RootAppState extends State<RootApp> {
   }
 
   Future<void> _setLogEvent() async {
-    await widget.analytics?.logEvent(
-      name: 'CS310_Test',
-      parameters: <String, dynamic> {
-        'string': 'string',
-        'int': 310,
-        'long': 1234567890123,
-        'double': 310.202002,
-        'bool': true,
-      }
-    );
+    await widget.analytics
+        ?.logEvent(name: 'CS310_Test', parameters: <String, dynamic>{
+      'string': 'string',
+      'int': 310,
+      'long': 1234567890123,
+      'double': 310.202002,
+      'bool': true,
+    });
     setMessage('Custom event log succeeded');
   }
 
@@ -56,9 +84,8 @@ class _RootAppState extends State<RootApp> {
       children: [
         HomePage(),
         searchScreen(),
-        Center(
-          child: Text("This place should show your gallery lol"),
-          /*
+        Upload(),
+        /*
           class _MyAppState extends State<MyApp> {
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
@@ -86,7 +113,7 @@ class _RootAppState extends State<RootApp> {
     }
   }
 */
-        ),
+
         ChatPage(),
         ProfilePage()
       ],
@@ -112,6 +139,7 @@ class _RootAppState extends State<RootApp> {
                   onTap: () {
                     setState(() {
                       activeTab = 0;
+                      _setCurrentScreen();
                     });
                   },
                   child: Icon(
@@ -127,6 +155,7 @@ class _RootAppState extends State<RootApp> {
                   onTap: () {
                     setState(() {
                       activeTab = 1;
+                      _setCurrentScreen2();
                     });
                   },
                   child: Icon(
@@ -143,6 +172,7 @@ class _RootAppState extends State<RootApp> {
                   onTap: () {
                     setState(() {
                       activeTab = 3;
+                      _setCurrentScreen1();
                     });
                   },
                   child: Icon(
@@ -158,6 +188,7 @@ class _RootAppState extends State<RootApp> {
                   onTap: () {
                     setState(() {
                       activeTab = 4;
+                      _setCurrentScreen3();
                     });
                   },
                   child: Icon(

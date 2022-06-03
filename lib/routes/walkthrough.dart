@@ -1,10 +1,15 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/routes/welcome.dart';
 
 class Walkthrough extends StatefulWidget {
-  const Walkthrough({Key? key}) : super(key: key);
+  const Walkthrough({Key? key, this.analytics, this.observer}) : super(key: key);
+
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
 
   @override
   _WalkthroughState createState() => _WalkthroughState();

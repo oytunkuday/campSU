@@ -2,14 +2,35 @@ import 'package:flutter/material.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
 
+import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  const ChatPage({Key? key, this.analytics, this.observer}) : super(key: key);
 
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
   @override
   _ChatPageState createState() => _ChatPageState();
+  
 }
 
 class _ChatPageState extends State<ChatPage> {
+
+    String _message = '';
+
+  void setMessage(String msg) {
+    setState(() {
+      _message = msg;
+    });
+  }
+
+    Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+        screenName: 'Notification Page',
+      screenClassOverride: 'NotificationPage',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

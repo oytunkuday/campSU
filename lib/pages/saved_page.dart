@@ -1,11 +1,16 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/post_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/pages/root_app.dart';
 
 class SavedPage extends StatefulWidget {
-  const SavedPage({Key? key}) : super(key: key);
+  const SavedPage({Key? key, this.analytics, this.observer}) : super(key: key);
+  final FirebaseAnalytics? analytics;
+  final FirebaseAnalyticsObserver? observer;
 
+  static const String routeName = '/saved';
   @override
   _SavedPageState createState() => _SavedPageState();
 }
@@ -18,6 +23,13 @@ class _SavedPageState extends State<SavedPage> {
       appBar:
           PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: getBody(),
+    );
+  }
+
+  Future<void> _setCurrentScreen() async {
+    await widget.analytics?.setCurrentScreen(
+      screenName: 'Saved Page',
+      screenClassOverride: 'savedPage',
     );
   }
 
@@ -44,6 +56,7 @@ class _SavedPageState extends State<SavedPage> {
   }
 
   Widget getBody() {
+    _setCurrentScreen();
     var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: AppColors.backgroundColor,
