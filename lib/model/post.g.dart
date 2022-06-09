@@ -17,28 +17,29 @@ Map<String, dynamic> _$GeoToJson(Geo instance) => <String, dynamic>{
     };
 
 JsonPost _$JsonPostFromJson(Map<String, dynamic> json) => JsonPost(
-      owner: json['owner'] as String,
-      text: json['text'] as String,
-      date: json['date'] as String,
-      comments:
-          (json['comments'] as List<dynamic>).map((e) => e as String).toList(),
-      likecount: json['likecount'] as int,
-      likes: (json['likes'] as List<dynamic>).map((e) => e as String).toList(),
-      content: json['content'],
-      userId: json['userId'] as int? ?? 0,
-      postId: json['id'] as int,
+      username: json['username'] as String,
+      postid: json['postid'] as String,
+      email: json['email'] as String,
+      date: DateTime.parse(json['date'] as String),
+      comments: json['comments'] as List<dynamic>,
+      likes: json['likes'] as List<dynamic>,
+      content: json['content'] as String,
       geo: Geo.fromJson(json['geo'] as Map<String, dynamic>),
+      Liked: json['Liked'] as bool? ?? false,
+      postPhotoUrl: json['postPhotoUrl'] as String,
+      userPhotoUrl: json['userPhotoUrl'] as String,
     );
 
 Map<String, dynamic> _$JsonPostToJson(JsonPost instance) => <String, dynamic>{
-      'owner': instance.owner,
-      'text': instance.text,
-      'date': instance.date,
+      'username': instance.username,
+      'email': instance.email,
+      'date': instance.date.toIso8601String(),
+      'userPhotoUrl': instance.userPhotoUrl,
+      'postPhotoUrl': instance.postPhotoUrl,
       'comments': instance.comments,
-      'likecount': instance.likecount,
       'likes': instance.likes,
       'content': instance.content,
       'geo': instance.geo,
-      'userId': instance.userId,
-      'id': instance.postId,
+      'Liked': instance.Liked,
+      'postid': instance.postid,
     };

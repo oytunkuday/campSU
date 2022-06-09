@@ -5,7 +5,7 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   User? _userFromFirebase(User? user) {
-    return user;
+    return user ?? null;
   }
 
   Stream<User?> get user {

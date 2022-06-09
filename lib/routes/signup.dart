@@ -268,7 +268,7 @@ class _SignUpState extends State<SignUp> {
                         if (_formkey.currentState!.validate()) {
                           _formkey.currentState!.save();
 
-                          db.addUserAutoID(name, email, 'token');
+                          //db.addUserAutoID(name, email, 'token');
                           print("selamlar");
                           await signUser();
                           setState(() {});

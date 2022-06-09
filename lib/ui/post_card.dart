@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:campsu/model/post.dart';
 
 class PostCard extends StatelessWidget {
@@ -82,3 +82,4 @@ class PostCard extends StatelessWidget {
     );
   }
 }
+*/

@@ -34,6 +34,13 @@ class _UploadState extends State<Upload> {
     });
   }
 
+  Future pickImageCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = pickedFile;
+    });
+  }
+
   Future uploadImageToFirebase(BuildContext context) async {
     String fileName = basename(_image!.path);
     Reference firebaseStorageRef =
@@ -58,11 +65,30 @@ class _UploadState extends State<Upload> {
       appBar:
           PreferredSize(child: getAppBar(), preferredSize: Size.fromHeight(60)),
       body: SafeArea(
-        child: Column(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(child: Text('Connected to Firebase')),
+            SizedBox(width: 50),
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    height: double.infinity,
+                    margin: EdgeInsets.only(left: 30, right: 30, top: 10),
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: _image != null
+                            ? Image.file(File(_image!.path))
+                            : TextButton(
+                                child: Icon(
+                                  Icons.browse_gallery,
+                                  size: 50,
+                                ),
+                                onPressed: pickImage,
+                              )),
+                  ),
+                ],
+              ),
             ),
             Expanded(
               child: Stack(
@@ -77,15 +103,15 @@ class _UploadState extends State<Upload> {
                             : TextButton(
                                 child: Icon(
                                   Icons.add_a_photo,
-                                  size: 150,
+                                  size: 50,
                                 ),
-                                onPressed: pickImage,
+                                onPressed: pickImageCamera,
                               )),
-                  )
+                  ),
                 ],
               ),
             ),
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_image != null)

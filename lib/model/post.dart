@@ -5,24 +5,31 @@ import 'dart:core';
 part 'post.g.dart';
 
 class Post {
-  String owner;
-  String text;
-  String date;
-  List<String> comments;
-  List<String> likes;
-  int likecount;
-  var content;
+  String username;
+  String postid;
+  String email;
+  DateTime date;
+  String userPhotoUrl;
+  String postPhotoUrl;
+  List<dynamic> comments;
+  List<dynamic> likes;
+  String content;
   Geo geo;
-
+  bool Liked;
   Post(
-      {required this.owner,
-      required this.text,
+
+      {required this.username,
+      required this.postid,
+      required this.email,
       required this.date,
       required this.comments,
-      required this.likecount,
       required this.likes,
       required this.content,
-      required this.geo});
+      required this.geo,
+      this.Liked=false,
+      required this.postPhotoUrl,
+      required this.userPhotoUrl,
+      });
 }
 
 @JsonSerializable()
@@ -38,32 +45,33 @@ class Geo {
 
 @JsonSerializable()
 class JsonPost {
-  String owner;
-  String text;
-  String date;
-  List<String> comments;
-  int likecount;
-  List<String> likes;
-  var content;
+  String username;
+  String email;
+  DateTime date;
+  String userPhotoUrl;
+  String postPhotoUrl;
+  List<dynamic> comments;
+  List<dynamic> likes;
+  String content;
   Geo geo;
+  bool Liked;
 
-  @JsonKey(defaultValue: 0)
-  int userId;
 
-  @JsonKey(name: 'id')
-  int postId;
+  @JsonKey()
+  String postid;
 
   JsonPost(
-      {required this.owner,
-      required this.text,
+      {required this.username,
+      required this.postid,
+      required this.email,
       required this.date,
       required this.comments,
-      required this.likecount,
       required this.likes,
       required this.content,
-      required this.userId,
-      required this.postId,
-      required this.geo});
+      required this.geo,
+      this.Liked=false,
+      required this.postPhotoUrl,
+      required this.userPhotoUrl,});
 
   factory JsonPost.fromJson(Map<String, dynamic> json) =>
       _$JsonPostFromJson(json);

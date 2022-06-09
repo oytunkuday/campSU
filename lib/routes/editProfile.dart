@@ -7,6 +7,7 @@ import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/utils/screenSizes.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/pages/root_app.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -16,6 +17,23 @@ class EditProfile extends StatefulWidget {
 }
 
 class _editState extends State<EditProfile> {
+  
+  final ImagePicker _picker = ImagePicker();
+  XFile? _image;
+  
+  Future pickImageGallery() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      _image = pickedFile;
+    });
+  }
+  Future pickImageCamera() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+    setState(() {
+      _image = pickedFile;
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,8 +69,15 @@ class _editState extends State<EditProfile> {
                     ),
                     Center(
                       child: Container(
-                        child: const Text('Change',
-                            style: TextStyle(color: Colors.blue)),
+                        child: TextButton(
+                onPressed: () {
+                },
+                style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(0),
+                    textStyle: TextStyle(height: 1)),
+                child: const Text('Change Picture',
+                    style: TextStyle(color: Colors.blue)),
+              )
                       ),
                     ),
                     SizedBox(height: 5),
