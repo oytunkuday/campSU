@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:campsu/model/post.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class DBService {
   final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
@@ -63,6 +64,23 @@ class DBService {
     })
         .then((value) => print('Post Added'))
         .catchError((error) => print('Error: ${error.toString()}'));
+  }
+
+  Future<String> getDocId(email) async {
+
+    FirebaseAuth _auth = FirebaseAuth.instance;
+      User? _user = _auth.currentUser;
+
+      dynamic x;
+      final q = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get()
+          .then((value) => value.docs.map((doc) {
+                print("asjfdashdas");
+                x = doc.id;
+              }).toList());
+    return x;
   }
 
 }

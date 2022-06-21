@@ -129,7 +129,6 @@ class _UploadPPState extends State<UploadPP> {
       User? _user = _auth.currentUser;
 
       dynamic x;
-      print("SELAM $email");
       final q = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
@@ -139,7 +138,14 @@ class _UploadPPState extends State<UploadPP> {
                 x = doc.id;
               }).toList());
       print("hello there $x");
-
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(x)
+          .update({"photoUrl": posturl}).then((result) {
+        print("new USer true");
+      }).catchError((onError) {
+        print("onError");
+      });
       setState(() {
         _image = null;
       });
@@ -207,51 +213,8 @@ class _UploadPPState extends State<UploadPP> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_image != null)
-                  Container(
-                    width: screenWidth(context, dividedBy: 4.8),
-                    child: Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: InputDecoration(
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 2,
-                              color: AppColors.postColor,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          label: Container(
-                            width: 150,
-                            child: Row(
-                              children: [
-                                const Icon(Icons.message),
-                                const SizedBox(width: 2),
-                              ],
-                            ),
-                          ),
-                          fillColor: AppColors.textFieldFillColor,
-                          filled: true,
-                          labelStyle: kBoldLabelStyle,
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Colors.purple,
-                            ),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        onSaved: (value) {
-                          posttext = value ?? "";
-                        },
-                      ),
-                    ),
-                  ),
-                if (_image != null)
                   OutlinedButton(
                     onPressed: () {
-                      _formKey.currentState!.save();
                       uploadImageToFirebase(context);
                     },
                     child: Text('Upload image'),

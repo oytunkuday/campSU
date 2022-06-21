@@ -125,8 +125,7 @@ class _FollowersPageState extends State<FollowersPage> {
                               radius: 30,
                               child: IconButton(
                                 padding: EdgeInsets.zero,
-                                icon: Image.network(
-                                    'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'),
+                                icon: Image.network(doc.get('photoUrl')),
                                 color: Colors.white,
                                 onPressed: () {
                                   /*if(currUser!.email == doc.get('email')){
@@ -151,7 +150,7 @@ class _FollowersPageState extends State<FollowersPage> {
                               width: 30,
                             ),
                             Text(
-                              doc.get('username'),
+                              doc.get('name'),
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w600,

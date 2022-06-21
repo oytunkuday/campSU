@@ -171,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   TextButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/followers', arguments: {
-                        'followers': currUser!.followers,
+                        'followers': followers,
                       });
                     },
                     child: Text("Followers",

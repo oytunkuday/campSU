@@ -5,6 +5,7 @@ import 'package:campsu/pages/pp_page.dart';
 import 'package:campsu/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
@@ -12,7 +13,7 @@ import 'package:campsu/utils/dimensions.dart';
 import 'package:campsu/utils/screenSizes.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/pages/root_app.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class EditProfile extends StatefulWidget {
@@ -24,28 +25,43 @@ class EditProfile extends StatefulWidget {
 
 class _editState extends State<EditProfile> {
   bool isPhoto = true;
-
+  final _formKey = GlobalKey<FormState>();
   late VideoPlayerController _controller;
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final ImagePicker _picker = ImagePicker();
-  XFile? _image;
   String namech = '';
   String nicknamech = '';
   String bioch = '';
-  String urlch ='';
+  String urlch = '';
 
-  Future pickImageGallery() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _image = pickedFile;
-    });
-  }
+  Future uploadToFirebase(BuildContext context) async {
+    try {
+      FirebaseAuth _auth = FirebaseAuth.instance;
+      User? _user = _auth.currentUser;
 
-  Future pickImageCamera() async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      _image = pickedFile;
-    });
+      dynamic x;
+      final q = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get()
+          .then((value) => value.docs.map((doc) {
+                print("asjfdashdas");
+                x = doc.id;
+              }).toList());
+      print("hello there $x");
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(x)
+          .update({"name": namech}).then((result) {
+        print("new USer true");
+      }).catchError((onError) {
+        print("onError");
+      });
+      setState(() {});
+    } on FirebaseException catch (e) {
+      print('ERROR: ${e.code} - ${e.message}');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   MyUser? currUser;
@@ -138,6 +154,7 @@ class _editState extends State<EditProfile> {
             child: Padding(
               padding: Dimens.regularPadding,
               child: Form(
+                key: _formKey,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -158,9 +175,10 @@ class _editState extends State<EditProfile> {
                       child: Container(
                           child: TextButton(
                         onPressed: () {
-                          Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UploadPP()));
-
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UploadPP()));
                         },
                         style: TextButton.styleFrom(
                             padding: const EdgeInsets.all(0),
@@ -206,8 +224,8 @@ class _editState extends State<EditProfile> {
                           ),
                         ),
                         onSaved: (value) {
-                      namech = value ?? "";
-                      },
+                          namech = value ?? name;
+                        },
                       ),
                     ),
                     Container(
@@ -244,8 +262,8 @@ class _editState extends State<EditProfile> {
                           ),
                         ),
                         onSaved: (value) {
-                      nicknamech = value ?? "";
-                      },
+                          nicknamech = value ?? username;
+                        },
                       ),
                     ),
                     Container(
@@ -284,8 +302,8 @@ class _editState extends State<EditProfile> {
                           ),
                         ),
                         onSaved: (value) {
-                      bioch = value ?? "";
-                      },
+                          bioch = value ?? bio;
+                        },
                       ),
                     ),
                     Container(
@@ -328,6 +346,9 @@ class _editState extends State<EditProfile> {
                     SizedBox(height: 5),
                     OutlinedButton(
                       onPressed: () {
+                        uploadToFirebase(context);
+                        _formKey.currentState!.save();
+
                         Navigator.pop(context);
                       },
                       child: Padding(
