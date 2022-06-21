@@ -1,3 +1,6 @@
+import 'package:campsu/pages/follow_page.dart';
+import 'package:campsu/pages/following_page.dart';
+import 'package:campsu/pages/pp_page.dart';
 import 'package:campsu/pages/upload_page.dart';
 import 'package:campsu/utils/colors.dart';
 
@@ -100,11 +103,9 @@ class _AuthenticationStatusState extends State<AuthenticationStatus> {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
-
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User?>(context);
-
     if (user == null) {
       return Welcome(analytics: analytics, observer: observer);
     } else {
@@ -186,6 +187,12 @@ class _MyAppState extends State<MyApp> {
               Messages(analytics: analytics, observer: observer),
           Upload.routeName: (context) =>
               Upload(analytics: analytics, observer: observer),
+          '/followers': (context) =>
+              FollowersPage(analytics: analytics, observer: observer),
+          '/followings': (context) =>
+              FollowingsPage(analytics: analytics, observer: observer),
+          '/changepp': (context) =>
+              UploadPP(analytics: analytics, observer: observer),
         },
       );
     } else {
@@ -213,6 +220,12 @@ class _MyAppState extends State<MyApp> {
               Messages(analytics: analytics, observer: observer),
           Upload.routeName: (context) =>
               Upload(analytics: analytics, observer: observer),
+          '/followers': (context) =>
+              FollowersPage(analytics: analytics, observer: observer),
+          '/followings': (context) =>
+              FollowingsPage(analytics: analytics, observer: observer),
+          '/changepp': (context) =>
+              UploadPP(analytics: analytics, observer: observer),
         },
       );
     }

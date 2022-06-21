@@ -16,7 +16,7 @@ class DBService {
   List<dynamic> following,
   List<dynamic> posts,
   String website,
-  Geo geo,
+  Geo? geo,
   bool profType,
   List<dynamic> savedposts,) async {
     userCollection
@@ -37,4 +37,32 @@ class DBService {
         .then((value) => print('User Added'))
         .catchError((error) => print('Error: ${error.toString()}'));
   }
+  Future addPostAutoID(
+  String username,
+  String email,
+  DateTime date,
+  String userPhotoUrl,
+  String postPhotoUrl,
+  List<dynamic> comments,
+  List<dynamic> likes,
+  String content,
+  Geo? geo,
+  bool Liked) async {
+    postCollection.add({
+      "username":username,
+      "email":email,
+      "date":date,
+      "userPhotoUrl":userPhotoUrl,
+      "postPhotoUrl":postPhotoUrl,
+      "comments":comments,
+      "likes":likes,
+      "content":content,
+      "geo":geo,
+      "Liked":Liked
+
+    })
+        .then((value) => print('Post Added'))
+        .catchError((error) => print('Error: ${error.toString()}'));
+  }
+
 }

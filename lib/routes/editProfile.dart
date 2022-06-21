@@ -1,5 +1,10 @@
 import 'dart:io' show Platform;
+import 'package:campsu/data/me_post_json.dart';
+import 'package:campsu/model/user.dart';
+import 'package:campsu/pages/pp_page.dart';
 import 'package:campsu/pages/profile_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
@@ -8,6 +13,7 @@ import 'package:campsu/utils/screenSizes.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/pages/root_app.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:video_player/video_player.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -17,23 +23,103 @@ class EditProfile extends StatefulWidget {
 }
 
 class _editState extends State<EditProfile> {
-  
+  bool isPhoto = true;
+
+  late VideoPlayerController _controller;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final ImagePicker _picker = ImagePicker();
   XFile? _image;
-  
+  String namech = '';
+  String nicknamech = '';
+  String bioch = '';
+  String urlch ='';
+
   Future pickImageGallery() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = pickedFile;
     });
   }
+
   Future pickImageCamera() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.camera);
     setState(() {
       _image = pickedFile;
     });
   }
-  
+
+  MyUser? currUser;
+  String name = "";
+  String bio = "";
+  String username = "";
+  String email = "";
+  String photoUrl = "";
+  List<dynamic> followers = [];
+  List<dynamic> following = [];
+  List<dynamic> posts = [];
+  String website = "";
+  bool profType = false;
+  List<dynamic> savedposts = [];
+
+  void _loadUserInfo() async {
+    FirebaseAuth _auth;
+    User? _user;
+    _auth = FirebaseAuth.instance;
+    _user = _auth.currentUser;
+    var doc = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: _user?.email)
+        .get();
+
+    setState(() {
+      name = doc.docs[0]['name'];
+      username = doc.docs[0]['username'];
+      followers = doc.docs[0]['followers'];
+      following = doc.docs[0]['following'];
+      posts = doc.docs[0]['posts'];
+      website = doc.docs[0]['website'];
+      photoUrl = doc.docs[0]['photoUrl'];
+      bio = doc.docs[0]['bio'];
+      email = doc.docs[0]['email'];
+      profType = doc.docs[0]['profType'];
+      savedposts = doc.docs[0]['savedposts'];
+    });
+  }
+
+  final db = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserInfo();
+    _controller = VideoPlayerController.network(meVideoList[0]['videoUrl']);
+    currUser = MyUser(
+      name: name,
+      bio: bio,
+      username: username,
+      email: email,
+      photoUrl: photoUrl,
+      followers: followers,
+      following: following,
+      posts: posts,
+      website: website,
+      profType: profType,
+      savedposts: savedposts,
+    );
+    _controller.addListener(() {
+      setState(() {});
+    });
+    _controller.setLooping(true);
+    _controller.initialize().then((_) => setState(() {}));
+    _controller.play();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,24 +147,27 @@ class _editState extends State<EditProfile> {
                         height: 73,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
-                            image: const DecorationImage(
-                                image: NetworkImage(
-                                    "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                            image: DecorationImage(
+                                image: NetworkImage(photoUrl == ''
+                                    ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
+                                    : photoUrl),
                                 fit: BoxFit.cover)),
                       ),
                     ),
                     Center(
                       child: Container(
-                        child: TextButton(
-                onPressed: () {
-                },
-                style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(0),
-                    textStyle: TextStyle(height: 1)),
-                child: const Text('Change Picture',
-                    style: TextStyle(color: Colors.blue)),
-              )
-                      ),
+                          child: TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UploadPP()));
+
+                        },
+                        style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(0),
+                            textStyle: TextStyle(height: 1)),
+                        child: const Text('Change Picture',
+                            style: TextStyle(color: Colors.blue)),
+                      )),
                     ),
                     SizedBox(height: 5),
                     Container(
@@ -116,6 +205,9 @@ class _editState extends State<EditProfile> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
+                        onSaved: (value) {
+                      namech = value ?? "";
+                      },
                       ),
                     ),
                     Container(
@@ -151,6 +243,9 @@ class _editState extends State<EditProfile> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
+                        onSaved: (value) {
+                      nicknamech = value ?? "";
+                      },
                       ),
                     ),
                     Container(
@@ -188,6 +283,9 @@ class _editState extends State<EditProfile> {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
+                        onSaved: (value) {
+                      bioch = value ?? "";
+                      },
                       ),
                     ),
                     Container(

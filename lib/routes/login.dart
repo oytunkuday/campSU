@@ -16,9 +16,7 @@ import 'package:campsu/pages/home_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:campsu/utils/auth.dart';
-
 import '../model/user.dart';
-
 class Login extends StatefulWidget {
   Login({Key? key, this.analytics, this.observer}) : super(key: key);
 
@@ -29,8 +27,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 
   static const String routeName = '/login';
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-}
+  final Future<FirebaseApp> _initialization = Firebase.initializeApp();}
 
 class _LoginState extends State<Login> {
   int loginCounter = 0;
@@ -134,30 +131,18 @@ class _LoginState extends State<Login> {
                   child: const Text('OK'),
                   onPressed: () {
                     Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          }
-        });
-  }
-
+                  },)],);} });}
   @override
   void initState() {
     _setCurrentScreen();
     // TODO: implement initState
     super.initState();
     s = '';
-
     FirebaseAuth.instance.authStateChanges().listen((user) {
       if (user == null) {
       } else {
         Navigator.pushNamedAndRemoveUntil(
-            context, '/rootapp', (route) => false);
-      }
-    });
-  }
-
+            context, '/rootapp', (route) => false);}});}
   @override
   Widget build(BuildContext context) {
     _setCurrentScreen();

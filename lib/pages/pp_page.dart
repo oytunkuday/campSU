@@ -19,17 +19,17 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 
-class Upload extends StatefulWidget {
-  const Upload({Key? key, this.analytics, this.observer}) : super(key: key);
+class UploadPP extends StatefulWidget {
+  const UploadPP({Key? key, this.analytics, this.observer}) : super(key: key);
   final FirebaseAnalytics? analytics;
   final FirebaseAnalyticsObserver? observer;
-  static const String routeName = '/upload';
+  static const String routeName = '/changepp';
 
   @override
-  _UploadState createState() => _UploadState();
+  _UploadPPState createState() => _UploadPPState();
 }
 
-class _UploadState extends State<Upload> {
+class _UploadPPState extends State<UploadPP> {
   final ImagePicker _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   XFile? _image;
@@ -48,30 +48,6 @@ class _UploadState extends State<Upload> {
     setState(() {
       _image = pickedFile;
     });
-  }
-
-  Future uploadImageToFirebase(BuildContext context) async {
-    String fileName = basename(_image!.path);
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child('uploads/$fileName');
-
-    try {
-      UploadTask task = firebaseStorageRef.putFile(File(_image!.path));
-      var downurl = await (await task).ref.getDownloadURL();
-      String posturl = downurl.toString();
-      print("Upload complete");
-      dbs.addPostAutoID(username, email, DateTime.now(), photoUrl, posturl, [],
-          [], posttext, null, false);
-      print(posttext);
-      print(posturl);
-      setState(() {
-        _image = null;
-      });
-    } on FirebaseException catch (e) {
-      print('ERROR: ${e.code} - ${e.message}');
-    } catch (e) {
-      print(e.toString());
-    }
   }
 
   MyUser? currUser;
@@ -137,6 +113,41 @@ class _UploadState extends State<Upload> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = basename(_image!.path);
+    Reference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('uploads/$fileName');
+
+    try {
+      UploadTask task = firebaseStorageRef.putFile(File(_image!.path));
+      var downurl = await (await task).ref.getDownloadURL();
+      String posturl = downurl.toString();
+      print("Upload complete");
+      FirebaseAuth _auth = FirebaseAuth.instance;
+      User? _user = _auth.currentUser;
+
+      dynamic x;
+      print("SELAM $email");
+      final q = await FirebaseFirestore.instance
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get()
+          .then((value) => value.docs.map((doc) {
+                print("asjfdashdas");
+                x = doc.id;
+              }).toList());
+      print("hello there $x");
+
+      setState(() {
+        _image = null;
+      });
+    } on FirebaseException catch (e) {
+      print('ERROR: ${e.code} - ${e.message}');
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @override
@@ -233,7 +244,6 @@ class _UploadState extends State<Upload> {
                         ),
                         onSaved: (value) {
                           posttext = value ?? "";
-                          print(posttext);
                         },
                       ),
                     ),
@@ -268,8 +278,8 @@ class _UploadState extends State<Upload> {
 
   Future<void> _setCurrentScreen() async {
     await widget.analytics?.setCurrentScreen(
-      screenName: 'Upload Page',
-      screenClassOverride: 'uploadPage',
+      screenName: 'ChangePP',
+      screenClassOverride: 'ChangePP',
     );
   }
 
@@ -283,7 +293,7 @@ class _UploadState extends State<Upload> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Post",
+              "Change Profile Picture",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 25,

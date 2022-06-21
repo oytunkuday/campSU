@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:campsu/model/user.dart';
 import 'package:campsu/pages/saved_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/me_post_json.dart';
@@ -8,6 +10,7 @@ import 'package:campsu/utils/colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:campsu/routes/editProfile.dart';
 import 'package:campsu/routes/settingsProfile.dart';
+import 'package:campsu/pages/follow_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -21,11 +24,65 @@ class _ProfilePageState extends State<ProfilePage> {
 
   late VideoPlayerController _controller;
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  MyUser? currUser;
+  String name = "";
+  String bio = "";
+  String username = "";
+  String email = "";
+  String photoUrl = "";
+  List<dynamic> followers = [];
+  List<dynamic> following = [];
+  List<dynamic> posts = [];
+  String website = "";
+  bool profType = false;
+  List<dynamic> savedposts = [];
+
+  void _loadUserInfo() async {
+    FirebaseAuth _auth;
+    User? _user;
+    _auth = FirebaseAuth.instance;
+    _user = _auth.currentUser;
+    var doc = await FirebaseFirestore.instance
+        .collection('users')
+        .where('email', isEqualTo: _user?.email)
+        .get();
+
+    setState(() {
+      name = doc.docs[0]['name'];
+      username = doc.docs[0]['username'];
+      followers = doc.docs[0]['followers'];
+      following = doc.docs[0]['following'];
+      posts = doc.docs[0]['posts'];
+      website = doc.docs[0]['website'];
+      photoUrl = doc.docs[0]['photoUrl'];
+      bio = doc.docs[0]['bio'];
+      email = doc.docs[0]['email'];
+      profType = doc.docs[0]['profType'];
+      savedposts = doc.docs[0]['savedposts'];
+    });
+  }
+
+  final db = FirebaseFirestore.instance;
+
   @override
   void initState() {
     super.initState();
+    _loadUserInfo();
     _controller = VideoPlayerController.network(meVideoList[0]['videoUrl']);
-
+    currUser = MyUser(
+      name: name,
+      bio: bio,
+      username: username,
+      email: email,
+      photoUrl: photoUrl,
+      followers: followers,
+      following: following,
+      posts: posts,
+      website: website,
+      profType: profType,
+      savedposts: savedposts,
+    );
     _controller.addListener(() {
       setState(() {});
     });
@@ -57,7 +114,8 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
               onPressed: () async {
                 await _auth.signOut();
-                Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/', (route) => false);
               },
               icon: Icon(Icons.logout))
         ],
@@ -84,15 +142,16 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 73,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
-                        image: const DecorationImage(
-                            image: NetworkImage(
-                                "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                        image: DecorationImage(
+                            image: NetworkImage(photoUrl == ''
+                                ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
+                                : photoUrl),
                             fit: BoxFit.cover)),
                   ),
                 ),
               ),
               Column(
-                children: const [
+                children: [
                   Text(
                     "Posts",
                     style: TextStyle(fontSize: 15, color: Colors.black),
@@ -101,7 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     height: 8,
                   ),
                   Text(
-                    "35",
+                    "${posts.length}",
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -109,15 +168,35 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 // ignore: prefer_const_literals_to_create_immutables
                 children: [
-                  const Text(
-                    "Friends",
-                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/followers', arguments: {
+                        'followers': currUser!.followers,
+                      });
+                    },
+                    child: Text("Followers",
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
                   ),
-                  const SizedBox(
-                    height: 8,
+                  Text(
+                    '${followers.length}',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    "1,552",
+                ],
+              ),
+              Column(
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/followings', arguments: {
+                        'following': currUser!.followers,
+                      });
+                    },
+                    child: Text("Following",
+                        style: TextStyle(fontSize: 15, color: Colors.black)),
+                  ),
+                  Text(
+                    '${following.length}',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -143,13 +222,13 @@ class _ProfilePageState extends State<ProfilePage> {
             const SizedBox(
               height: 8,
             ),
-            const Text(
-              " Admin Bugsızkod",
+            Text(
+              "${name}",
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             Row(children: [
-              const Text(
-                " @noBugs",
+              Text(
+                " @${username}",
                 style: TextStyle(fontSize: 15, height: 1),
               ),
               SizedBox(width: 244),
@@ -166,8 +245,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     style: TextStyle(color: Colors.blue)),
               )
             ]),
-            const Text(
-              " Software Engineer at Sabanci University",
+            Text(
+              "${bio}",
               style: TextStyle(fontSize: 15),
             ),
           ],

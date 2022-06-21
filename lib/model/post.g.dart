@@ -24,11 +24,12 @@ JsonPost _$JsonPostFromJson(Map<String, dynamic> json) => JsonPost(
       comments: json['comments'] as List<dynamic>,
       likes: json['likes'] as List<dynamic>,
       content: json['content'] as String,
-      geo: Geo.fromJson(json['geo'] as Map<String, dynamic>),
       Liked: json['Liked'] as bool? ?? false,
       postPhotoUrl: json['postPhotoUrl'] as String,
       userPhotoUrl: json['userPhotoUrl'] as String,
-    );
+    )..geo = json['geo'] == null
+        ? null
+        : Geo.fromJson(json['geo'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$JsonPostToJson(JsonPost instance) => <String, dynamic>{
       'username': instance.username,

@@ -13,7 +13,7 @@ class MyUser {
   List<dynamic> following;
   List<dynamic> posts;
   String website;
-  Geo geo;
+  Geo? geo;
   bool profType;
   List<dynamic> savedposts;
 
@@ -24,7 +24,6 @@ class MyUser {
     required this.bio,
     required this.username,
     required this.website,
-    required this.geo,
     required this.followers,
     required this.following,
     required this.posts,

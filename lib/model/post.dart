@@ -14,7 +14,7 @@ class Post {
   List<dynamic> comments;
   List<dynamic> likes;
   String content;
-  Geo geo;
+  Geo? geo;
   bool Liked;
   Post(
 
@@ -25,7 +25,6 @@ class Post {
       required this.comments,
       required this.likes,
       required this.content,
-      required this.geo,
       this.Liked=false,
       required this.postPhotoUrl,
       required this.userPhotoUrl,
@@ -53,7 +52,7 @@ class JsonPost {
   List<dynamic> comments;
   List<dynamic> likes;
   String content;
-  Geo geo;
+  Geo? geo;
   bool Liked;
 
 
@@ -68,7 +67,6 @@ class JsonPost {
       required this.comments,
       required this.likes,
       required this.content,
-      required this.geo,
       this.Liked=false,
       required this.postPhotoUrl,
       required this.userPhotoUrl,});

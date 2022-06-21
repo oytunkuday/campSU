@@ -13,13 +13,14 @@ MyUser _$MyUserFromJson(Map<String, dynamic> json) => MyUser(
       bio: json['bio'] as String,
       username: json['username'] as String,
       website: json['website'] as String,
-      geo: Geo.fromJson(json['geo'] as Map<String, dynamic>),
       followers: json['followers'] as List<dynamic>,
       following: json['following'] as List<dynamic>,
       posts: json['posts'] as List<dynamic>,
       photoUrl: json['photoUrl'] as String,
       profType: json['profType'] as bool,
-    );
+    )..geo = json['geo'] == null
+        ? null
+        : Geo.fromJson(json['geo'] as Map<String, dynamic>);
 
 Map<String, dynamic> _$MyUserToJson(MyUser instance) => <String, dynamic>{
       'name': instance.name,
