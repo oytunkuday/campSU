@@ -79,11 +79,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     borderRadius: BorderRadius.circular(28),
                     border: Border.all(color: Colors.black)),
                 child: Center(
-                  child: GestureDetector(
-                    onTap: () async{
-                      await showDialog(context: context, builder: (_)=> ppLarge("https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"));
-                    },
-                    child: Container(
+                  child: Container(
                     width: 73,
                     height: 73,
                     decoration: BoxDecoration(
@@ -91,9 +87,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         image: const DecorationImage(
                             image: NetworkImage(
                                 "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
-                            fit: BoxFit.cover)
-                            ),
-                    )
+                            fit: BoxFit.cover)),
                   ),
                 ),
               ),
@@ -299,19 +293,6 @@ class _ProfilePageState extends State<ProfilePage> {
             content: AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
               child: VideoPlayer(_controller),
-            )
-            )
-            );
+            )));
   }
-}
-
-
-Widget ppLarge(pPath){
-  return Dialog(
-    child: Container(
-      width: 150,
-      height: 200,
-      child: Image.network(pPath,fit: BoxFit.cover)
-    ),
-  );
 }
