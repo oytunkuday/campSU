@@ -1,3 +1,4 @@
+import 'package:campsu/notifications/notificationPage.dart';
 import 'package:campsu/pages/upload_page.dart';
 import 'package:flutter/material.dart';
 import "package:campsu/pages/chat_page.dart";
@@ -114,7 +115,8 @@ class _RootAppState extends State<RootApp> {
   }
 */
 
-        ChatPage(),
+        NotificationPage(),
+        //ChatPage(),
         ProfilePage()
       ],
     );

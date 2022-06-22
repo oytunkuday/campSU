@@ -261,9 +261,9 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  FlatButton(
-                    color: const Color.fromARGB(255, 254, 202, 134),
-                    textColor: Colors.black,
+                  OutlinedButton(
+                    //color: const Color.fromARGB(255, 254, 202, 134),
+                    //textColor: Colors.black,
                     onPressed: () {
                       setState(() {
                         isPhoto = true;
@@ -274,9 +274,9 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
                       style: TextStyle(fontSize: 20.0),
                     ),
                   ),
-                  FlatButton(
-                    color: const Color.fromARGB(255, 254, 202, 134),
-                    textColor: Colors.black,
+                  OutlinedButton(
+                    //color: const Color.fromARGB(255, 254, 202, 134),
+                    //textColor: Colors.black,
                     onPressed: () {
                       setState(() {
                         isPhoto = false;

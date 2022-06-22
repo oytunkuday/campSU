@@ -294,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Center(child: CircularProgressIndicator());
-          } else
+          } else {
             return SingleChildScrollView(
               child: Column(
                 children: [
@@ -303,9 +303,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FlatButton(
-                            color: const Color.fromARGB(255, 254, 202, 134),
-                            textColor: Colors.black,
+                          OutlinedButton(
+                            //color: const Color.fromARGB(255, 254, 202, 134),
+                            //textColor: Colors.black,
                             onPressed: () {
                               setState(() {
                                 isPhoto = true;
@@ -316,9 +316,9 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(fontSize: 20.0),
                             ),
                           ),
-                          FlatButton(
-                            color: const Color.fromARGB(255, 254, 202, 134),
-                            textColor: Colors.black,
+                          OutlinedButton(
+                            //color: const Color.fromARGB(255, 254, 202, 134),
+                            //textColor: Colors.black,
                             onPressed: () {
                               setState(() {
                                 isPhoto = false;
@@ -395,6 +395,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             );
+          }
         });
   }
 

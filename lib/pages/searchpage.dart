@@ -1,8 +1,11 @@
 import 'dart:ffi';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/data/user_json.dart';
 import 'package:campsu/utils/colors.dart';
 import 'package:campsu/utils/styles.dart';
+
+import '../users/usersClass.dart';
 
 Widget getAppBar() {
   return AppBar(
@@ -18,93 +21,145 @@ class searchScreen extends StatefulWidget {
 }
 
 class _searchScreen extends State<searchScreen> {
+
+  List<Object> allUsers = [];
+  List<Object> _resultsList = [];
+
+  Icon customIcon = const Icon(Icons.search);
+  Widget customSearchBar = const Text('Search');
+
+  final myController = TextEditingController();
+
+  @override
+  void dispose() {
+    myController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    getUserList();
+  }
+
+  Future getUserList() async {
+    var data = await FirebaseFirestore.instance
+        .collection('users')
+        .get();
+
+    setState(() {
+      allUsers = List.from(data.docs.map((doc) => UsersClass.fromSnapshot(doc)));
+    });
+    searchResultList();
+  }
+
+  void _onSearchChanged() {
+    searchResultList();
+    print('Text field: ${myController.text}');
+  }
+
+  void searchResultList() {
+    List<Object> showResults = [];
+
+    if(myController.text != "") {
+      for(var index = 0; index < allUsers.length; index++){
+
+        final UsersClass productSnapshot = allUsers[index] as UsersClass;
+
+        var username = productSnapshot.username.toLowerCase();
+        if(username.contains(myController.text.toLowerCase())) {
+          showResults.add(allUsers[index]);
+        }
+      }
+    }
+    else {
+      showResults = [];
+    }
+
+    setState(() {
+      _resultsList = showResults;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-          title: Text(
-            "Search",
-            style: TextStyle(
-                color: Colors.black, fontSize: 25, fontWeight: FontWeight.bold),
-          ),
           backgroundColor: AppColors.headColor,
-          actions: <Widget>[
-            IconButton(
-                icon: Icon(Icons.search),
-                color: Colors.black,
-                onPressed: () {
-                  showSearch(context: context, delegate: DataSearch());
-                })
-          ]),
-      drawer: Drawer(),
-    );
-  }
-}
+        title: customSearchBar,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {
+                myController.addListener(_onSearchChanged);
+                if (customIcon.icon == Icons.search) {
+                  customIcon = const Icon(Icons.cancel);
+                  customSearchBar = ListTile(
+                    leading: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    title: TextField(
+                      controller: myController,
+                      decoration: InputDecoration(
+                        hintText: 'username search',
+                        hintStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        border: InputBorder.none,
+                      ),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                }  else {
+                  customIcon = const Icon(Icons.search);
+                  customSearchBar = const Text('Search');
+                }
+              });
+            },
+            icon: customIcon,
 
-class DataSearch extends SearchDelegate<String> {
-  @override
-  ThemeData appBarTheme(BuildContext context) {
-    return ThemeData(
-      appBarTheme: const AppBarTheme(
-        color: AppColors.headColor, // affects AppBar's background color
-        textTheme: const TextTheme(
-            headline6: TextStyle(
-                // headline 6 affects the query text
-                color: Colors.white,
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold)),
+          ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: _resultsList.length,
+                itemBuilder: (context, index) {
+                  UsersClass user = _resultsList[index] as UsersClass;
+                  return Card(
+                      elevation: 2,
+                      color: const Color(0xAACCCCCC),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          user.username,
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                  );
+                },
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
-
-  @override
-  List<Widget>? buildActions(BuildContext context) {
-    //Actions
-    return [
-      IconButton(
-          onPressed: () {
-            query = '';
-          },
-          icon: Icon(Icons.clear)),
-    ];
-  }
-
-  @override
-  Widget? buildLeading(BuildContext context) {
-    //Leading Icon
-    return IconButton(
-        onPressed: () {
-          //close(context, null);
-        },
-        icon: AnimatedIcon(
-          icon: AnimatedIcons.arrow_menu,
-          progress: transitionAnimation,
-        ));
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    // Show Result Based On Selection
-    return Container(
-      color: AppColors.backgroundColor,
-    );
-    throw UnimplementedError();
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    //Show When Searched
-    final suggestionList = query.isEmpty ? recentSearches : searchDATA;
-
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-          leading: Icon(Icons.no_photography),
-          title: Text(suggestionList[index])),
-      itemCount: suggestionList.length,
-    );
-  }
 }
-
-final recentSearches = [];
-final searchDATA = ['Oytun', 'Bengisu', 'Bora', 'Hamit', 'Berkehan'];
