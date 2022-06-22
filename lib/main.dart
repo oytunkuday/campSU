@@ -226,6 +226,12 @@ class _MyAppState extends State<MyApp> {
               FollowingsPage(analytics: analytics, observer: observer),
           '/changepp': (context) =>
               UploadPP(analytics: analytics, observer: observer),
+          '/publicUser':(context) =>
+              Upload(analytics: analytics, observer: observer),
+          '/privateUser':(context) =>
+              Upload(analytics: analytics, observer: observer),
+          '/followedUser':(context) =>
+              Upload(analytics: analytics, observer: observer),
         },
       );
     }
