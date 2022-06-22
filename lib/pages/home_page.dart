@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:campsu/model/post.dart';
+import 'package:campsu/pages/post_view.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +72,13 @@ class _HomePageState extends State<HomePage> {
           } else
             return ListView(
               children: snapshot.data!.docs.map((doc) {
-                return Container(
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const PostView()),
+                    );
+                  },
                   child: Padding(
                     padding: const EdgeInsets.only(left: 25, right: 25),
                     child: Column(
