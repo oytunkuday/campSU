@@ -8,6 +8,7 @@ import 'package:campsu/utils/screenSizes.dart';
 import 'package:campsu/utils/styles.dart';
 import 'package:campsu/pages/root_app.dart';
 import 'package:campsu/routes/welcome.dart';
+import 'package:campsu/routes/changePass.dart';
 
 class SettingsProfile extends StatefulWidget {
   @override
@@ -40,6 +41,24 @@ class _settingsState extends State<SettingsProfile> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(height: 30),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangePassword()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      child: Text(
+                        'Change Password',
+                        style: kButtonLightTextStyle,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: AppColors.greyColor.withOpacity(0.8),
+                    ),
+                  ),
                   OutlinedButton(
                     onPressed: () {},
                     child: Padding(
@@ -122,7 +141,6 @@ class _settingsState extends State<SettingsProfile> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => Welcome()));
-                      ;
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
