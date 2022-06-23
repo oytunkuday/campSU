@@ -25,7 +25,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:campsu/pages/messages.dart';
 import 'package:campsu/pages/profile_page.dart';
-
+import 'package:campsu/utils/auth.dart';
 import '../utils/styles.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -173,8 +173,13 @@ class _ChangePasswordState extends State<ChangePassword> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        //setState(() {});
-                        Navigator.pushNamed(context, '/profilepage');
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage()));
+                        ;
+                        setState(() {});
                       } else {
                         _showDialog('Form Error', 'Your inputs are invalid');
                       }

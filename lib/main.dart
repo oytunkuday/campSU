@@ -1,5 +1,6 @@
 import 'package:campsu/pages/follow_page.dart';
 import 'package:campsu/pages/following_page.dart';
+import 'package:campsu/pages/myPosts.dart';
 import 'package:campsu/pages/pp_page.dart';
 import 'package:campsu/pages/upload_page.dart';
 import 'package:campsu/utils/colors.dart';
@@ -232,6 +233,7 @@ class _MyAppState extends State<MyApp> {
               Upload(analytics: analytics, observer: observer),
           '/followedUser':(context) =>
               Upload(analytics: analytics, observer: observer),
+          'myPosts': (context) => myPostsPage(analytics: analytics, observer: observer)
         },
       );
     }

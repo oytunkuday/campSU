@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:campsu/model/user.dart';
+import 'package:campsu/pages/myPosts.dart';
+import 'package:campsu/pages/ppview.dart';
 import 'package:campsu/pages/saved_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,26 +145,34 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         SizedBox(width: 1),
-                        Container(
-                          width: 75,
-                          height: 75,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(28),
-                              border: Border.all(color: Colors.black)),
-                          child: Center(
+                        GestureDetector(
                             child: Container(
-                              width: 73,
-                              height: 73,
+                              width: 75,
+                              height: 75,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(30),
-                                  image: DecorationImage(
-                                      image: NetworkImage(photoUrl == ''
-                                          ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
-                                          : photoUrl),
-                                      fit: BoxFit.cover)),
+                                  borderRadius: BorderRadius.circular(28),
+                                  border: Border.all(color: Colors.black)),
+                              child: Center(
+                                child: Container(
+                                  width: 73,
+                                  height: 73,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                      image: DecorationImage(
+                                          image: NetworkImage(photoUrl == ''
+                                              ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
+                                              : photoUrl),
+                                          fit: BoxFit.cover)),
+                                ),
+                              ),
                             ),
-                          ),
-                        ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => sadecePPPage()));
+                              ;
+                            }),
                         Column(
                           children: [
                             Text(
@@ -306,10 +316,17 @@ class _ProfilePageState extends State<ProfilePage> {
                               setState(() {
                                 isPhoto = true;
                               });
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => myPostsPage()));
+                              ;
                             },
                             child: const Text(
                               'All Posts',
-                              style: TextStyle(fontSize: 20.0),
+                              style: TextStyle(
+                                  fontSize: 20.0, color: Colors.black),
                             ),
                           ),
                           OutlinedButton(
@@ -322,7 +339,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             },
                             child: const Text(
                               'Videos',
-                              style: TextStyle(fontSize: 20.0),
+                              style: TextStyle(
+                                  fontSize: 20.0, color: Colors.black),
                             ),
                           ),
                           IconButton(

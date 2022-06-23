@@ -355,6 +355,16 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                           ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                                color: AppColors.postColor,
+                                                child: Text(
+                                                    "${doc.get('content')}"))
+                                          ],
                                         )
                                       ],
                                     ),
@@ -362,8 +372,8 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ],
                             ),
-                          )
-                        ])
+                          ),
+                        ]),
                       ],
                     ),
                   ),

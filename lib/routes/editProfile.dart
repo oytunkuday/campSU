@@ -149,241 +149,237 @@ class _editState extends State<EditProfile> {
     return FutureBuilder<QuerySnapshot>(
         future: _loadUserInfo(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          } else
-            return Scaffold(
-                appBar: AppBar(
-                  title: Text(
-                    'Edit Profile',
-                    style: kAppBarTitleTextStyle,
-                  ),
-                  backgroundColor: AppColors.headColor,
-                  centerTitle: true,
-                  elevation: 0.0,
+          return Scaffold(
+              appBar: AppBar(
+                title: Text(
+                  'Edit Profile',
+                  style: kAppBarTitleTextStyle,
                 ),
-                body: Scaffold(
-                  backgroundColor: AppColors.backgroundColor,
-                  body: SingleChildScrollView(
-                    child: Padding(
-                      padding: Dimens.regularPadding,
-                      child: Form(
-                        key: _formKey,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Center(
-                              child: Container(
-                                width: 73,
-                                height: 73,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                        image: NetworkImage(photoUrl == ''
-                                            ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
-                                            : photoUrl),
-                                        fit: BoxFit.cover)),
-                              ),
+                backgroundColor: AppColors.headColor,
+                centerTitle: true,
+                elevation: 0.0,
+              ),
+              body: Scaffold(
+                backgroundColor: AppColors.backgroundColor,
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: Dimens.regularPadding,
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 73,
+                              height: 73,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  image: DecorationImage(
+                                      image: NetworkImage(photoUrl == ''
+                                          ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
+                                          : photoUrl),
+                                      fit: BoxFit.cover)),
                             ),
-                            Center(
-                              child: Container(
-                                  child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => UploadPP()));
-                                },
-                                style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.all(0),
-                                    textStyle: TextStyle(height: 1)),
-                                child: const Text('Change Picture',
-                                    style: TextStyle(color: Colors.blue)),
-                              )),
-                            ),
-                            SizedBox(height: 5),
-                            Container(
-                              padding: EdgeInsets.all(24),
-                              width: screenWidth(context, dividedBy: 1.1),
-                              child: TextFormField(
-                                keyboardType: TextInputType.text,
-                                enableSuggestions: false,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: AppColors.postColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  label: Container(
-                                    width: 150,
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                            Icons.person_outline_outlined),
-                                        const SizedBox(width: 4),
-                                        const Text('Name'),
-                                      ],
-                                    ),
-                                  ),
-                                  fillColor: AppColors.textFieldFillColor,
-                                  filled: true,
-                                  labelStyle: kBoldLabelStyle,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.purple,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                onSaved: (value) {
-                                  namech = value ?? name;
-                                },
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(24),
-                              width: screenWidth(context, dividedBy: 1.1),
-                              child: TextFormField(
-                                keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: AppColors.postColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  label: Container(
-                                    width: 116,
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.person),
-                                        const SizedBox(width: 4),
-                                        const Text('Nickname'),
-                                      ],
-                                    ),
-                                  ),
-                                  fillColor: AppColors.textFieldFillColor,
-                                  filled: true,
-                                  labelStyle: kBoldLabelStyle,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.purple,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                onSaved: (value) {
-                                  nicknamech = value ?? username;
-                                },
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(24),
-                              width: screenWidth(context, dividedBy: 1.1),
-                              child: TextFormField(
-                                keyboardType: TextInputType.text,
-                                enableSuggestions: false,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: AppColors.postColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  label: Container(
-                                    width: 150,
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.terrain_rounded),
-                                        const SizedBox(width: 4),
-                                        const Text('Biography'),
-                                      ],
-                                    ),
-                                  ),
-                                  fillColor: AppColors.textFieldFillColor,
-                                  filled: true,
-                                  labelStyle: kBoldLabelStyle,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.purple,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                                onSaved: (value) {
-                                  bioch = value ?? bio;
-                                },
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(24),
-                              width: screenWidth(context, dividedBy: 1.1),
-                              child: TextFormField(
-                                keyboardType: TextInputType.text,
-                                enableSuggestions: false,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      width: 2,
-                                      color: AppColors.postColor,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  label: Container(
-                                    width: 150,
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.menu_book),
-                                        const SizedBox(width: 4),
-                                        const Text('Field'),
-                                      ],
-                                    ),
-                                  ),
-                                  fillColor: AppColors.textFieldFillColor,
-                                  filled: true,
-                                  labelStyle: kBoldLabelStyle,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Colors.purple,
-                                    ),
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 5),
-                            OutlinedButton(
+                          ),
+                          Center(
+                            child: Container(
+                                child: TextButton(
                               onPressed: () {
-                                uploadToFirebase(context);
-                                _formKey.currentState!.save();
-
-                                Navigator.pop(context);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UploadPP()));
                               },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12.0),
-                                child: Text(
-                                  'Save Changes',
-                                  style: kButtonDarkTextStyle,
+                              style: TextButton.styleFrom(
+                                  padding: const EdgeInsets.all(0),
+                                  textStyle: TextStyle(height: 1)),
+                              child: const Text('Change Picture',
+                                  style: TextStyle(color: Colors.blue)),
+                            )),
+                          ),
+                          SizedBox(height: 5),
+                          Container(
+                            padding: EdgeInsets.all(24),
+                            width: screenWidth(context, dividedBy: 1.1),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: AppColors.postColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                label: Container(
+                                  width: 150,
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.person_outline_outlined),
+                                      const SizedBox(width: 4),
+                                      const Text('Name'),
+                                    ],
+                                  ),
+                                ),
+                                fillColor: AppColors.textFieldFillColor,
+                                filled: true,
+                                labelStyle: kBoldLabelStyle,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.purple,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                               ),
-                              style: OutlinedButton.styleFrom(
-                                backgroundColor: AppColors.headColor,
+                              onSaved: (value) {
+                                namech = value ?? name;
+                              },
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(24),
+                            width: screenWidth(context, dividedBy: 1.1),
+                            child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: AppColors.postColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                label: Container(
+                                  width: 116,
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.person),
+                                      const SizedBox(width: 4),
+                                      const Text('Nickname'),
+                                    ],
+                                  ),
+                                ),
+                                fillColor: AppColors.textFieldFillColor,
+                                filled: true,
+                                labelStyle: kBoldLabelStyle,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.purple,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onSaved: (value) {
+                                nicknamech = value ?? username;
+                              },
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(24),
+                            width: screenWidth(context, dividedBy: 1.1),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: AppColors.postColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                label: Container(
+                                  width: 150,
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.terrain_rounded),
+                                      const SizedBox(width: 4),
+                                      const Text('Biography'),
+                                    ],
+                                  ),
+                                ),
+                                fillColor: AppColors.textFieldFillColor,
+                                filled: true,
+                                labelStyle: kBoldLabelStyle,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.purple,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              onSaved: (value) {
+                                bioch = value ?? bio;
+                              },
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(24),
+                            width: screenWidth(context, dividedBy: 1.1),
+                            child: TextFormField(
+                              keyboardType: TextInputType.text,
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    width: 2,
+                                    color: AppColors.postColor,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                label: Container(
+                                  width: 150,
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.menu_book),
+                                      const SizedBox(width: 4),
+                                      const Text('Field'),
+                                    ],
+                                  ),
+                                ),
+                                fillColor: AppColors.textFieldFillColor,
+                                filled: true,
+                                labelStyle: kBoldLabelStyle,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.purple,
+                                  ),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: 5),
+                          OutlinedButton(
+                            onPressed: () {
+                              uploadToFirebase(context);
+                              _formKey.currentState!.save();
+
+                              Navigator.pop(context);
+                            },
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 12.0),
+                              child: Text(
+                                'Save Changes',
+                                style: kButtonDarkTextStyle,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              backgroundColor: AppColors.headColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                ));
+                ),
+              ));
         });
   }
 }
