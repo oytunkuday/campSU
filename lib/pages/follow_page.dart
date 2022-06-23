@@ -20,6 +20,7 @@ class FollowersPage extends StatefulWidget {
 class _FollowersPageState extends State<FollowersPage> {
   MyUser? currUser;
   String name = "";
+  String id = '';
   String bio = "";
   String username = "";
   String email = "";
@@ -53,6 +54,7 @@ class _FollowersPageState extends State<FollowersPage> {
       email = doc.docs[0]['email'];
       profType = doc.docs[0]['profType'];
       savedposts = doc.docs[0]['savedposts'];
+      id = doc.docs[0].id;
     });
   }
 
@@ -123,27 +125,8 @@ class _FollowersPageState extends State<FollowersPage> {
                             CircleAvatar(
                               backgroundColor: Colors.black,
                               radius: 30,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Image.network(doc.get('photoUrl')),
-                                color: Colors.white,
-                                onPressed: () {
-                                  /*if(currUser!.email == doc.get('email')){
-                                    Navigator.push(context, new MaterialPageRoute(
-                                        builder: (context) => new profilePage())
-                                    );
-                                  }
-                                  else {
-                                    Navigator.pushNamed(
-                                        context, '/otherUserProfile',
-                                        arguments: {
-                                          'email': doc.get('email'),
-                                          'email2': currentUser!.email,
-                                          'username2': username
-                                        });
-                                  }
-                                  print('button clicked');*/
-                                },
+                              child: ClipOval(
+                                child: Image.network(doc.get('photoUrl')),
                               ),
                             ),
                             SizedBox(
@@ -156,6 +139,45 @@ class _FollowersPageState extends State<FollowersPage> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                            IconButton(
+                                icon: Icon(Icons.cancel,
+                                    color: Colors.black, size: 15),
+                                onPressed: () {
+                                  var userid = doc.id;
+                                  dynamic followings = doc.get('following');
+                                  followings = followings ?? [];
+                                  followers = followers ?? [];
+                                  var emailoffollower = doc.get(('email'));
+                                  if (followers.contains(emailoffollower)) {
+                                    followers.removeWhere(
+                                        (str) => str == emailoffollower);
+                                    if (followings.contains(email)) {
+                                      followings
+                                          .removeWhere((str) => str == email);
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(userid)
+                                          .update({
+                                        "following": followings
+                                      }).then((result) {
+                                        print("followers CHANGED");
+                                      }).catchError((onError) {
+                                        print(onError.toString());
+                                      });
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(id)
+                                          .update({
+                                        "followers": followers
+                                      }).then((result) {
+                                        print("followers CHANGED");
+                                      }).catchError((onError) {
+                                        print(onError.toString());
+                                      });
+                                      setState(() {});
+                                    }
+                                  }
+                                })
                           ],
                         ),
                       ],

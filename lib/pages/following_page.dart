@@ -30,6 +30,7 @@ class _FollowingsPageState extends State<FollowingsPage> {
   String website = "";
   bool profType = false;
   List<dynamic> savedposts = [];
+  var id = "";
 
   void _loadUserInfo() async {
     FirebaseAuth _auth;
@@ -53,6 +54,7 @@ class _FollowingsPageState extends State<FollowingsPage> {
       email = doc.docs[0]['email'];
       profType = doc.docs[0]['profType'];
       savedposts = doc.docs[0]['savedposts'];
+      id = doc.docs[0].id;
     });
   }
 
@@ -123,28 +125,8 @@ class _FollowingsPageState extends State<FollowingsPage> {
                             CircleAvatar(
                               backgroundColor: Colors.black,
                               radius: 30,
-                              child: IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Image.network(
-                                    'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'),
-                                color: Colors.white,
-                                onPressed: () {
-                                  /*if(currUser!.email == doc.get('email')){
-                                    Navigator.push(context, new MaterialPageRoute(
-                                        builder: (context) => new profilePage())
-                                    );
-                                  }
-                                  else {
-                                    Navigator.pushNamed(
-                                        context, '/otherUserProfile',
-                                        arguments: {
-                                          'email': doc.get('email'),
-                                          'email2': currentUser!.email,
-                                          'username2': username
-                                        });
-                                  }
-                                  print('button clicked');*/
-                                },
+                              child: ClipOval(
+                                child: Image.network(doc.get('photoUrl')),
                               ),
                             ),
                             SizedBox(
@@ -157,14 +139,54 @@ class _FollowingsPageState extends State<FollowingsPage> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                            IconButton(
+                                icon: Icon(Icons.cancel,
+                                    color: Colors.black, size: 15),
+                                onPressed: () {
+                                  var userid = doc.id;
+                                  dynamic followersof = doc.get('followers');
+                                  followersof = followersof ?? [];
+                                  following = following ?? [];
+                                  var emailoffollowing = doc.get(('email'));
+                                  if (followersof.contains(email)) {
+                                    followersof
+                                        .removeWhere((str) => str == email);
+                                    if (following.contains(emailoffollowing)) {
+                                      following.removeWhere(
+                                          (str) => str == emailoffollowing);
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(userid)
+                                          .update({
+                                        "followers": followersof
+                                      }).then((result) {
+                                        print("followers CHANGED");
+                                      }).catchError((onError) {
+                                        print(onError.toString());
+                                      });
+                                      FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(id)
+                                          .update({
+                                        "following": following
+                                      }).then((result) {
+                                        print("followers CHANGED");
+                                      }).catchError((onError) {
+                                        print(onError.toString());
+                                      });
+                                      setState(() {
+                                        
+                                      });
+                                    }
+                                  }
+                                })
                           ],
                         ),
                       ],
                     ),
                   );
-                } else {
-                  return Card();
                 }
+                return SizedBox();
               }).toList(),
             );
         },
