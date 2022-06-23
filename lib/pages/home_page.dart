@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, curly_braces_in_flow_control_structures
 
 import 'package:campsu/model/user.dart';
 import 'package:campsu/utils/db.dart';
@@ -176,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Container(
                                   width: double.infinity,
-                                  height: 339,
+                                  height: 340,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
