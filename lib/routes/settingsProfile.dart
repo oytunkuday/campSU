@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:campsu/pages/profile_page.dart';
+import 'package:campsu/routes/changeProfType.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:campsu/utils/colors.dart';
@@ -60,7 +61,12 @@ class _settingsState extends State<SettingsProfile> {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangeProfType()));
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
                       child: Text(
