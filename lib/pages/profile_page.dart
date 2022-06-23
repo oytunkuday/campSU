@@ -119,166 +119,162 @@ class _ProfilePageState extends State<ProfilePage> {
     return FutureBuilder<QuerySnapshot>(
         future: _loadUserInfo(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
-          } else
-            return AppBar(
-                elevation: 2,
-                actions: [
-                  IconButton(
-                      onPressed: () async {
-                        await _auth.signOut();
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/', (route) => false);
-                      },
-                      icon: Icon(Icons.logout))
-                ],
-                backgroundColor: AppColors.headColor,
-                flexibleSpace: SafeArea(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [SizedBox(height: 6)],
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          SizedBox(width: 1),
-                          Container(
-                            width: 75,
-                            height: 75,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(28),
-                                border: Border.all(color: Colors.black)),
-                            child: Center(
-                              child: Container(
-                                width: 73,
-                                height: 73,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    image: DecorationImage(
-                                        image: NetworkImage(photoUrl == ''
-                                            ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
-                                            : photoUrl),
-                                        fit: BoxFit.cover)),
-                              ),
+          return AppBar(
+              elevation: 2,
+              actions: [
+                IconButton(
+                    onPressed: () async {
+                      await _auth.signOut();
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (route) => false);
+                    },
+                    icon: Icon(Icons.logout))
+              ],
+              backgroundColor: AppColors.headColor,
+              flexibleSpace: SafeArea(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [SizedBox(height: 6)],
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SizedBox(width: 1),
+                        Container(
+                          width: 75,
+                          height: 75,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(28),
+                              border: Border.all(color: Colors.black)),
+                          child: Center(
+                            child: Container(
+                              width: 73,
+                              height: 73,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  image: DecorationImage(
+                                      image: NetworkImage(photoUrl == ''
+                                          ? 'https://www.pngfind.com/mpng/iwowowR_koren-hosnell-profile-icon-white-png-transparent-png/'
+                                          : photoUrl),
+                                      fit: BoxFit.cover)),
                             ),
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                "Posts",
-                                style: TextStyle(
-                                    fontSize: 15, color: Colors.black),
-                              ),
-                              SizedBox(
-                                height: 8,
-                              ),
-                              Text(
-                                "${posts.length}",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              TextButton(
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Posts",
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.black),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${posts.length}",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/followers',
+                                    arguments: {
+                                      'followers': followers,
+                                    });
+                              },
+                              child: Text("Followers",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.black)),
+                            ),
+                            Text(
+                              '${followers.length}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          // ignore: prefer_const_literals_to_create_immutables
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/followings',
+                                    arguments: {
+                                      'following': following,
+                                    });
+                              },
+                              child: Text("Following",
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.black)),
+                            ),
+                            Text(
+                              '${following.length}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            IconButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/followers',
-                                      arguments: {
-                                        'followers': followers,
-                                      });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SettingsProfile()));
+                                  ;
                                 },
-                                child: Text("Followers",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black)),
-                              ),
-                              Text(
-                                '${followers.length}',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            // ignore: prefer_const_literals_to_create_immutables
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/followings',
-                                      arguments: {
-                                        'following': currUser!.followers,
-                                      });
-                                },
-                                child: Text("Following",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black)),
-                              ),
-                              Text(
-                                '${following.length}',
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                SettingsProfile()));
-                                    ;
-                                  },
-                                  icon: Icon(
-                                    Icons.settings,
-                                    color: Colors.black,
-                                    size: 32,
-                                  ))
-                            ],
-                          )
-                        ]),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                                icon: Icon(
+                                  Icons.settings,
+                                  color: Colors.black,
+                                  size: 32,
+                                ))
+                          ],
+                        )
+                      ]),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    "${name}",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Row(children: [
                     Text(
-                      "${name}",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      " @${username}",
+                      style: TextStyle(fontSize: 15, height: 1),
                     ),
-                    Row(children: [
-                      Text(
-                        " @${username}",
-                        style: TextStyle(fontSize: 15, height: 1),
-                      ),
-                      SizedBox(width: 244),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => EditProfile()));
-                          ;
-                        },
-                        style: TextButton.styleFrom(
-                            padding: const EdgeInsets.all(0),
-                            textStyle: TextStyle(height: 1)),
-                        child: const Text('Edit Profile',
-                            style: TextStyle(color: Colors.blue)),
-                      )
-                    ]),
-                    Text(
-                      "${bio}",
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ],
-                )));
+                    SizedBox(width: 244),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfile()));
+                        ;
+                      },
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          textStyle: TextStyle(height: 1)),
+                      child: const Text('Edit Profile',
+                          style: TextStyle(color: Colors.blue)),
+                    )
+                  ]),
+                  Text(
+                    "${bio}",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ],
+              )));
         });
   }
 

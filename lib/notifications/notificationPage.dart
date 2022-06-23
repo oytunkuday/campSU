@@ -5,7 +5,6 @@ import '../utils/colors.dart';
 import 'notifCard.dart';
 import 'notificationClass.dart';
 
-
 class NotificationPage extends StatefulWidget {
   NotificationPage({Key, key}) : super(key: key);
 
@@ -14,7 +13,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-
   List<Object> _notifList = [];
 
   @override
@@ -30,9 +28,9 @@ class _NotificationPageState extends State<NotificationPage> {
         .get();
 
     setState(() {
-      _notifList = List.from(data.docs.map((doc) => NotificationClass.fromSnapshot(doc)));
+      _notifList = List.from(
+          data.docs.map((doc) => NotificationClass.fromSnapshot(doc)));
     });
-
   }
 
   @override
@@ -47,12 +45,11 @@ class _NotificationPageState extends State<NotificationPage> {
       ),
       body: SafeArea(
           child: ListView.builder(
-            itemCount: _notifList.length,
-            itemBuilder: (context, index) {
-              return NotifCard(_notifList[index] as NotificationClass);
-            },
-          )
-      ),
+        itemCount: _notifList.length,
+        itemBuilder: (context, index) {
+          return NotifCard(_notifList[index] as NotificationClass);
+        },
+      )),
     );
   }
 }
